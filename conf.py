@@ -38,7 +38,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Biomedical Statistics'
+project = u'Time Series'
 copyright = u'2010, Avril Coghlan'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -173,7 +173,7 @@ latex_paper_size = 'a4'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'BiomedicalStats.tex', u'A Little Book of R For Biomedical Statistics',
+  ('index', 'TimeSeries.tex', u'A Little Book of R For Time Series',
    u'Avril Coghlan', 'manual'),
 ]
 
