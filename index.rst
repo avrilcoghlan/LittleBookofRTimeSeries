@@ -5,8 +5,7 @@ By `Avril Coghlan <http://www.ucc.ie/microbio/avrilcoghlan/>`_,
 University College Cork, Cork, Ireland. 
 Email: a.coghlan@ucc.ie
 
-This is a simple introduction to time series analysis using the
-R statistics software.
+This is a simple introduction to time series analysis using the R statistics software.
 
 There is a pdf version of this booklet available at
 
@@ -31,7 +30,7 @@ this document.
 Contact
 -------
 
-I will be grateful if you will send me (`Avril Coghlan <http://www.ucc.ie/microbio/avrilcoghlan/>`_) corrections or suggestions for improvements to
+I will be very grateful if you will send me (`Avril Coghlan <http://www.ucc.ie/microbio/avrilcoghlan/>`_) corrections or suggestions for improvements to
 my email address a.coghlan@ucc.ie 
 
 License

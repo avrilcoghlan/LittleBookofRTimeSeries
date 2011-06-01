@@ -4,7 +4,7 @@ Using R for Time Series Analysis
 Time series analysis
 --------------------
 
-This booklet tells you how to use the R software to carry out some simple analyses
+This booklet itells you how to use the R statistical software to carry out some simple analyses
 that are common in analysing time series data. 
 
 This booklet assumes that the reader has some basic knowledge of time series analysis, and
