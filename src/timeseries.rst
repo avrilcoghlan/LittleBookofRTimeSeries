@@ -53,11 +53,12 @@ The data set looks like this:
     34
     ...
 
- Only the first few lines of the file have been shown. The first three lines contain
- some comment on the data, and we want to ignore this when we read the data into R.
- We can use this by using the "skip" parameter of the scan() function, which specifies
- how many lines at the top of the file to ignore. To read the file into R, ignoring the
- first three lines, we type:
+
+Only the first few lines of the file have been shown. The first three lines contain
+some comment on the data, and we want to ignore this when we read the data into R.
+We can use this by using the "skip" parameter of the scan() function, which specifies
+how many lines at the top of the file to ignore. To read the file into R, ignoring the
+first three lines, we type:
 
 .. highlight:: r
 
