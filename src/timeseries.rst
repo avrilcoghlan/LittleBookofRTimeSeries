@@ -21,7 +21,7 @@ available by Rob Hyndman in his Time Series Data Library at
 `http://robjhyndman.com/TSDL/ <http://robjhyndman.com/TSDL/>`_. 
 
 There is a pdf version of this booklet available at
-`https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf`_.
+`https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf>`_.
 
 Reading in Time Series Data into R
 ----------------------------------
