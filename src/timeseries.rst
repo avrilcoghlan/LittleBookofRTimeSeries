@@ -224,8 +224,8 @@ the log-transformed time series seem to be roughly constant over time, and do no
 on the level of the time series. Thus, the log-transformed time series can probably be
 described using an additive model. 
 
-Estimating the Trend Component of a Non-Seasonal Time Series using Smoothing
-----------------------------------------------------------------------------
+Estimating the Trend Component of a Non-Seasonal Time Series
+------------------------------------------------------------
 
 To estimate the trend component of a non-seasonal time series that can be described
 using an additive model, it is common to use a smoothing method, such as calculating
@@ -279,7 +279,7 @@ For example, we can try using a simple moving average of order 8:
 |image7|
 
 The data smoothed with a simple moving average of order 8 gives a clearer picture of the
-trend component, as we can see that the age of death of the English kings seems to have
+trend component, and we can see that the age of death of the English kings seems to have
 decreased over time for a while, and then increased over time after that. 
 
 Links and Further Reading
@@ -327,4 +327,4 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image4| image:: ../_static/image4.png
 .. |image5| image:: ../_static/image5.png
 .. |image6| image:: ../_static/image6.png
-
+.. |image7| image:: ../_static/image7.png
