@@ -134,6 +134,67 @@ We can read the data into R, and store it as a time series object, by typing:
       1958 27.132 24.924 28.963 26.589 27.931 28.009 29.229 28.759 28.405 27.945 25.912 26.619
       1959 26.076 25.286 27.660 25.951 26.398 25.565 28.865 30.000 29.261 29.012 26.992 27.897   
 
+Similarly, the file `http://robjhyndman.com/tsdldata/epi/mumps.dat 
+<http://robjhyndman.com/tsdldata/epi/mumps.dat>`_ contains time series data on
+the monthly reported number of cases of mumps in New York city, from 1928-1972 (original
+data from Hipel and Mcleod, 1994). The first line of the file contains a comment, so
+we need to set skip=1 in the scan() function to ignore it. We can read the data into R by typing:
+
+.. highlight:: r
+
+::
+
+    > mumps <- scan("http://robjhyndman.com/tsdldata/epi/mumps.dat",skip=1)
+      Read 534 items
+    > mumpstimeseries <- ts(mumps, frequency=12, start=c(1928,1))
+    > mumpstimeseries
+      Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
+      1928  124  132  193  144  195  105   40   20   42   58  170  197
+      1929  329  417  968  989 1264 1074  352  118   69   91  182  233
+      1930  406  550  853  835  787  518  132   66   57   77   83  138
+      1931  116  177  288  299  315  329  143   50   59   74  110  180
+      1932  361  556  687  821  799  901  478  212  153  207  386  576
+      1933  807  923 1604 1475 1123  662  253  116   70  107  147  155
+      1934  266  249  406  452  547  472  213  136  114  137  276  341
+      1935  688  935 1850 1938 1806 1030  472  151  123  133  195  255
+      1936  357  386  543  645  668  659  276  142   93   82  122  225
+      1937  315  360  777 1070 1115 1200  550  279  154  170  290  488
+      1938  764  990 1695 1738 1295 1026  345  178   85  115  122  179
+      1939  266  326  454  510  555  531  358  177  131  189  262  398
+      1940  662  733  941 1229 1485 1406  959  436  233  221  391  696
+      1941  930  899 1261 1245  847  626  348  168  132  142  201  399
+      1942  569  651 1024 1272 1258  960  445  201  138  117  162  272
+      1943  395  552  926 1062 1070  846  355  172  109   94  184  245
+      1944  324  433  752  845  859  671  275  134   75  104  161  237
+      1945  330  467  707  667  711  793  429  211  140  207  251  289
+      1946  433  468  799 1138 1048  710  438  178  114  118  175  206
+      1947  412  477  641  814  846  883  591  208  177  221  311  680
+      1948 1105 1490 1956 1713 1291 1053  366  153   95  117  130  183
+      1949  312  417  596  554  510  527  290  162   96   97  191  353
+      1950  604  767 1116 1103 1330 1342  670  319  167  176  261  363
+      1951  616  634  808  902 1003  833  475  243  167  152  182  279
+      1952  520  615  745  838  787  827  570  254  182  185  268  530
+      1953  813  785 1266 1495 1659 1532 1071  458  265  230  299  634
+      1954  802  945 1220 1088  792  707  420  199  134  123  176  284
+      1955  371  491  851  923  882  945  561  324  205  225  470  657
+      1956 1066 1371 1674 1844 1819 1469  769  393  176  240  299  375
+      1957  584  490  702  769  765  601  389  217  165  120  137  204
+      1958  288  348  515  774  751  711  555  280  182  160  255  565
+      1959  753  890 1183 1117  983  988  573  278  219  171  270  415
+      1960  510  587  721  754  699  667  355  230  145  129  235  263
+      1961  361  350  551  488  631  717  452  293  165  180  230  276
+      1962  435  487  563  608  803  615  554  297  166  213  303  517
+      1963  703  735 1037 1078  954  729  552  321  166  177  216  310
+      1964  342  268  304  280  286  280  213  143  101  117  132  277
+      1965  280  424  668  635  701  926  706  493  309  259  324  541
+      1966  569  672 1020  848  754  765  437  255  166  130  165  166
+      1967  235  261  390  424  500  440  294  167  126  124  162  182
+      1968  274  349  420  607  572  496  415  240  158  124  135  100
+      1969  164  148  298  506  567  639  447  283  158  223  212  333
+      1970  330  281  354  527  463  429  300  147  104   90   77  122
+      1971  146  149  248  300  223  294  235  110   88   68   88  132
+      1972  149  157  219  221  264  298
+
 Plotting a Time Series in R
 ---------------------------
 
@@ -150,6 +211,9 @@ For example, to plot the time series of the age of death of 42 successive kings 
 
 |image1|
 
+We can see from the time plot that this time series could probably be described using an additive
+model, since the random fluctuations in the data are roughly constant in size over time.
+
 Likewise, to plot the time series of the number of births per month in New York city, we type:
 
 .. highlight:: r
@@ -159,6 +223,23 @@ Likewise, to plot the time series of the number of births per month in New York 
     > plot.ts(birthstimeseries)
 
 |image2|
+
+We can see from this time series that there seems to be seasonal variation in the number of
+births per month: there is a peak every summer, and a trough every winter. Again, it seems 
+that this time series could probably be described using an additive model, as the seasonal
+fluctuations are roughly constant in size over time and do not seem to depend on the level
+of the time series, and the random fluctuations also seem to be roughly constant in size over time.
+
+Similarly, to plot the time series of the monthly reported number of cases of mumps in New York city,
+we type:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(mumpstimeseries)
+
+|image4|
 
 Links and Further Reading
 -------------------------
@@ -202,4 +283,5 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 
 .. |image1| image:: ../_static/image1.png
 .. |image2| image:: ../_static/image2.png
+.. |image4| image:: ../_static/image4.png
 
