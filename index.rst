@@ -8,8 +8,7 @@ Email: a.coghlan@ucc.ie
 This is a simple introduction to time series analysis using the R statistics software.
 
 There is a pdf version of this booklet available at
-
-`http://media.readthedocs.org/pdf/a-little-book-of-r-for-time-series/latest/a-little-book-of-r-for-time-series.pdf <http://media.readthedocs.org/pdf/a-little-book-of-r-for-time-series/latest/a-little-book-of-r-for-time-series.pdf>`_. 
+`https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf`_.
 
 Contents:
 
