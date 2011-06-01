@@ -249,8 +249,12 @@ For example, to calculate a simple moving average of order 5, we set n=5 in the 
 
 For example, as discussed
 above, the time series of the age of death of 42 successive kings of England appears is
-non-seasonal, and can probably be described using an additive model. Thus, we can try to
-estimate the trend component of this time series by smoothing using a simple moving average.
+non-seasonal, and can probably be described using an additive model, since the 
+random fluctuations in the data are roughly constant in size over time:
+
+|image1|
+
+Thus, we can try to estimate the trend component of this time series by smoothing using a simple moving average.
 To smooth the time series using a simple moving average of order 3, and plot the smoothed
 time series data, we type:
 
@@ -280,7 +284,101 @@ For example, we can try using a simple moving average of order 8:
 
 The data smoothed with a simple moving average of order 8 gives a clearer picture of the
 trend component, and we can see that the age of death of the English kings seems to have
-decreased over time for a while, and then increased over time after that. 
+decreased from about 55 years old to about 38 years old during the reign of the first 20 kings, and
+then increased after that to about 73 years old by the end of the reign of the 40th king in the time series. 
+
+Estimating the Trend and Seasonal Components of a Seasonal Time Series
+----------------------------------------------------------------------
+
+To estimate the trend component and seasonal component of a seasonal time series that can be described
+using an additive model, we can use the "decompose()" function in R. This function estimates the trend,
+seasonal, and irregular components of a time series that can be described using an additive model.
+
+The function "decompose()" returns a list object as its result, where the estimates of the seasonal
+component, trend component and irregular component are stored in named elements of that list objects, called 
+"seasonal", "trend", and "random" respectively.
+
+For example, as discussed above, the time series of the number of births per month in New York city
+is seasonal with a peak every summer and trough every winter, and can probably be described using
+an additive model since the seasonal and random fluctuations seem to be roughly constant in size over time:
+
+|image2|
+
+To estimate the trend, seasonal and irregular components of this time series, we type:
+
+.. highlight:: r
+
+::
+
+    > birthstimeseriescomponents <- decompose(birthstimeseries)
+    > birthstimeseriescomponents$trend    # get the estimated values of the trend component
+      Jan      Feb      Mar      Apr      May      Jun      Jul      Aug      Sep      Oct      Nov      Dec
+     1946       NA       NA       NA       NA       NA       NA 23.98433 23.66212 23.42333 23.16113 22.86425 22.54521
+     1947 22.35350 22.30871 22.30258 22.29479 22.29354 22.30562 22.33483 22.31167 22.26279 22.25796 22.27767 22.35400
+     1948 22.43038 22.43667 22.38721 22.35242 22.32458 22.27458 22.23754 22.21987 22.16983 22.07721 22.01396 22.02604
+     1949 22.06375 22.08033 22.13317 22.16604 22.17542 22.21342 22.27625 22.35750 22.48862 22.70992 22.98563 23.16346
+     1950 23.21662 23.26967 23.33492 23.42679 23.50637 23.57017 23.63887 23.75712 23.86354 23.89533 23.87342 23.88150
+     1951 24.00083 24.12350 24.20917 24.28208 24.35450 24.43242 24.49496 24.48379 24.43879 24.36829 24.29192 24.27642
+     1952 24.27204 24.27300 24.28942 24.30129 24.31325 24.35175 24.40558 24.44475 24.49325 24.58517 24.70429 24.76017
+     1953 24.78646 24.84992 24.92692 25.02362 25.16308 25.26963 25.30154 25.34125 25.42779 25.57588 25.73904 25.87513
+     1954 25.92446 25.92317 25.92967 25.92137 25.89567 25.89458 25.92962 25.98246 26.01054 25.88617 25.67087 25.57312
+     1955 25.64612 25.78679 25.93192 26.06388 26.16329 26.25387 26.35471 26.40496 26.45379 26.64933 26.95183 27.14683
+     1956 27.21104 27.21900 27.20700 27.26925 27.35050 27.37983 27.39975 27.44150 27.45229 27.43354 27.44487 27.46996
+     1957 27.44221 27.40283 27.44300 27.45717 27.44429 27.48975 27.54354 27.56933 27.63167 27.67804 27.62579 27.61212
+     1958 27.68642 27.76067 27.75962 27.71037 27.65783 27.58125 27.49075 27.46183 27.42262 27.34175 27.25129 27.08558
+     1959 26.96858 27.00512 27.09250 27.17263 27.26208 27.36033       NA       NA       NA       NA       NA       NA
+    > birthstimeseriescomponents$seasonal # get the estimated values of the seasonal component
+      Jan        Feb        Mar        Apr        May        Jun        Jul        Aug        Sep        Oct        Nov        Dec
+     1946 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1947 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1948 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1949 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1950 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1951 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1952 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1953 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1954 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1955 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1956 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1957 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1958 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1959 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+    > birthstimeseriescomponents$random   # get the estimated values of the irregular component
+ 
+The estimated values of the seasonal, trend and irregular components are now stored in variables
+birthstimeseriescomponents$seasonal, birthstimeseriescomponents$trend and birthstimeseriescomponents$random.
+For example, we can print out the estimated values of the seasonal component by typing:
+
+::
+
+    > birthstimeseriescomponents$seasonal # get the estimated values of the seasonal component
+           Jan        Feb        Mar        Apr        May        Jun        Jul        Aug        Sep        Oct        Nov        Dec
+     1946 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1947 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1948 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1949 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1950 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1951 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1952 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1953 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1954 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1955 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1956 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1957 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1958 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+     1959 -0.6771947 -2.0829607  0.8625232 -0.8016787  0.2516514 -0.1532556  1.4560457  1.1645938  0.6916162  0.7752444 -1.1097652 -0.3768197
+    
+The estimated seasonal factors are given for the months January-December, and are the same for each year. The largest
+seasonal factor is for July (about 1.46), and the lowest is for February (about -2.08), indicating that there seems
+to be a peak in births in July and a trough in births in February each year. 
+
+We can plot the estimated trend, seasonal, and irregular components of the time series by using the "plot()" function, for example:
+
+::
+
+    > plot(birthstimeseriescomponents) 
+
+|image8|
 
 Links and Further Reading
 -------------------------
@@ -328,3 +426,5 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image5| image:: ../_static/image5.png
 .. |image6| image:: ../_static/image6.png
 .. |image7| image:: ../_static/image7.png
+.. |image8| image:: ../_static/image8.png
+
