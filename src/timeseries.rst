@@ -76,6 +76,68 @@ first three lines, we type:
 In this case the age of death of 42 successive kings of England has been read into the
 variable 'kings'.
 
+Once you have read the time series data into R, the next step is to store the data in
+a time series object in R, so that you can use R's many functions for analysing time series data.
+To store the data in a time series object, we use the ts() function in R. For example,
+to store the data in the variable 'kings' as a time series object in R, we type:
+
+.. highlight:: r
+
+::
+
+    > kingstimeseries <- ts(kings)
+    > kingstimeseries 
+      Time Series:
+      Start = 1 
+      End = 42 
+      Frequency = 1 
+      [1] 60 43 67 50 56 42 50 65 68 43 65 34 47 34 49 41 13 35 53 56 16 43 69 59 48
+      [26] 59 86 55 68 51 33 49 67 77 81 67 71 81 68 70 77 56
+
+Sometimes the time series data set that you have may have been collected at regular intervals that
+were less than one year, for example, monthly or quarterly. In this case, you can specify the number
+of times that data was collected per year by using the 'frequency' parameter in the ts() function. 
+For monthly time series data, you set frequency=12, while for quarterly time series data, you set 
+frequency=4. 
+
+You can also specify the first year that the data was collected, and the first interval
+in that year by using the 'start' parameter in the ts() function. For example, if the first
+data point corresponds to the second quarter of 1986, you would set start=c(1986,2). 
+
+An example is a data set of the number of births per month in New York city, from
+January 1946 to December 1959 (originally collected by Newton). This data is available
+in the file `http://robjhyndman.com/tsdldata/data/nybirths.dat 
+<http://robjhyndman.com/tsdldata/data/nybirths.dat>`_
+We can read the data into R, and store it as a time series object, by typing:
+
+.. highlight:: r
+
+::
+
+    > births <- scan("http://robjhyndman.com/tsdldata/data/nybirths.dat")
+      Read 168 items
+    > birthstimeseries <- ts(births, frequency=12, start=c(1946,1))
+    > birthstimeseries
+        Jan    Feb    Mar    Apr    May    Jun    Jul    Aug    Sep    Oct    Nov    Dec
+      1946 26.663 23.598 26.931 24.740 25.806 24.364 24.477 23.901 23.175 23.227 21.672 21.870
+      1947 21.439 21.089 23.709 21.669 21.752 20.761 23.479 23.824 23.105 23.110 21.759 22.073
+      1948 21.937 20.035 23.590 21.672 22.222 22.123 23.950 23.504 22.238 23.142 21.059 21.573
+      1949 21.548 20.000 22.424 20.615 21.761 22.874 24.104 23.748 23.262 22.907 21.519 22.025
+      1950 22.604 20.894 24.677 23.673 25.320 23.583 24.671 24.454 24.122 24.252 22.084 22.991
+      1951 23.287 23.049 25.076 24.037 24.430 24.667 26.451 25.618 25.014 25.110 22.964 23.981
+      1952 23.798 22.270 24.775 22.646 23.988 24.737 26.276 25.816 25.210 25.199 23.162 24.707
+      1953 24.364 22.644 25.565 24.062 25.431 24.635 27.009 26.606 26.268 26.462 25.246 25.180
+      1954 24.657 23.304 26.982 26.199 27.210 26.122 26.706 26.878 26.152 26.379 24.712 25.688
+      1955 24.990 24.239 26.721 23.475 24.767 26.219 28.361 28.599 27.914 27.784 25.693 26.881
+      1956 26.217 24.218 27.914 26.975 28.527 27.139 28.982 28.169 28.056 29.136 26.291 26.987
+      1957 26.589 24.848 27.543 26.896 28.878 27.390 28.065 28.141 29.048 28.484 26.634 27.735
+      1958 27.132 24.924 28.963 26.589 27.931 28.009 29.229 28.759 28.405 27.945 25.912 26.619
+      1959 26.076 25.286 27.660 25.951 26.398 25.565 28.865 30.000 29.261 29.012 26.992 27.897   
+
+Plotting a Time Series in R
+---------------------------
+
+
 Links and Further Reading
 -------------------------
 
