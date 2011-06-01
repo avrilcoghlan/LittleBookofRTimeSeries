@@ -347,6 +347,33 @@ We can plot the estimated trend, seasonal, and irregular components of the time 
 
 |image8|
 
+The plot above shows the original time series (top), the estimated trend component (second from top), the estimated seasonal
+component (third from top), and the estimated irregular component (bottom). We see that the estimated trend component shows
+a small decrease from about 24 in 1947 to about 22 in 1948, followed by a steady increase from then on to about 27 in 1959.
+
+Seasonally Adjusting Time Series Data
+-------------------------------------
+
+If you have a seasonal time series that can be described using an additive model, you can seasonally adjust the time series
+by estimating the seasonal component, and subtracting the estimated seasonal component from the original time series. We can
+do this using the estimate of the seasonal component calculated by the "decompose()" function.
+
+For example, to seasonally adjust the time series of the number of births per month in New York city, we can estimate the
+seasonal component using "decompose()", and then subtract the seasonal component from the original time series:
+
+::
+
+    > birthstimeseriescomponents <- decompose(birthstimeseries)
+    > birthstimeseriesseasonallyadjusted <- birthstimeseries - birthstimeseriescomponents$seasonal 
+
+We can then plot the seasonally adjusted time series using the "plot()" function, by typing:
+
+::
+
+    > plot(birthstimeseriesseasonallyadjusted)
+
+|image9|
+
 Links and Further Reading
 -------------------------
 
@@ -394,4 +421,5 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image6| image:: ../_static/image6.png
 .. |image7| image:: ../_static/image7.png
 .. |image8| image:: ../_static/image8.png
+.. |image9| image:: ../_static/image9.png
 
