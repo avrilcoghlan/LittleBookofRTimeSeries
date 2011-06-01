@@ -224,6 +224,64 @@ the log-transformed time series seem to be roughly constant over time, and do no
 on the level of the time series. Thus, the log-transformed time series can probably be
 described using an additive model. 
 
+Estimating the Trend Component of a Non-Seasonal Time Series using Smoothing
+----------------------------------------------------------------------------
+
+To estimate the trend component of a non-seasonal time series that can be described
+using an additive model, it is common to use a smoothing method, such as calculating
+the simple moving average of the time series. 
+
+The SMA() function in the "TTR" R package can be used to smooth time series data using a 
+simple moving average. To use this function, we first need to install the "TTR" R package 
+(for instructions on how to install an R package, see `How to install an R package 
+<./installr.html#how-to-install-an-r-package>`_).
+Once you have installed the "TTR" R package, you can load the "TTR" R package by typing:
+
+.. highlight:: r
+
+::
+
+    > library("TTR")
+
+You can then use the "SMA()" function to smooth time series data. To use the SMA() function,
+you need to specify the order (span) of the simple moving average, using the parameter "n". 
+For example, to calculate a simple moving average of order 5, we set n=5 in the SMA() function.
+
+For example, as discussed
+above, the time series of the age of death of 42 successive kings of England appears is
+non-seasonal, and can probably be described using an additive model. Thus, we can try to
+estimate the trend component of this time series by smoothing using a simple moving average.
+To smooth the time series using a simple moving average of order 3, and plot the smoothed
+time series data, we type:
+
+.. highlight:: r
+
+::
+
+    > kingstimeseriesSMA3 <- SMA(kingstimeseries,n=3)
+    > plot.ts(kingstimeseriesSMA3) 
+
+|image6|
+
+There still appears to be quite a lot of random fluctuations in the time series smoothed
+using a simple moving average of order 3. Thus, to estimate the trend component more accurately, 
+we might want to try smoothing the data with a simple moving average of a higher order. 
+This takes a little bit of trial-and-error, to find the right amount of smoothing. 
+For example, we can try using a simple moving average of order 8: 
+
+.. highlight:: r
+
+::
+
+    > kingstimeseriesSMA8 <- SMA(kingstimeseries,n=8)
+    > plot.ts(kingstimeseriesSMA8) 
+
+|image7|
+
+The data smoothed with a simple moving average of order 8 gives a clearer picture of the
+trend component, as we can see that the age of death of the English kings seems to have
+decreased over time for a while, and then increased over time after that. 
+
 Links and Further Reading
 -------------------------
 
@@ -268,3 +326,5 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image2| image:: ../_static/image2.png
 .. |image4| image:: ../_static/image4.png
 .. |image5| image:: ../_static/image5.png
+.. |image6| image:: ../_static/image6.png
+
