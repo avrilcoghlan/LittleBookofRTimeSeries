@@ -137,6 +137,28 @@ We can read the data into R, and store it as a time series object, by typing:
 Plotting a Time Series in R
 ---------------------------
 
+Once you have read a time series into R, the next step is usually to make a plot of the time series
+data, which you can do with the plot.ts() function in R.
+
+For example, to plot the time series of the age of death of 42 successive kings of England, we type:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(kingstimeseries)
+
+|image1|
+
+Likewise, to plot the time series of the number of births per month in New York city, we type:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(birthstimeseries)
+
+|image2|
 
 Links and Further Reading
 -------------------------
@@ -178,6 +200,6 @@ License
 The content in this book is licensed under a `Creative Commons Attribution 3.0 License
 <http://creativecommons.org/licenses/by/3.0/>`_.
 
+.. |image1| image:: ../_static/image1.png
 .. |image2| image:: ../_static/image2.png
-.. |image3| image:: ../_static/image3.png
-.. |image4| image:: ../_static/image4.png
+
