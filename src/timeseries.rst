@@ -1,7 +1,7 @@
 Using R for Time Series Analysis 
 ================================
 
-Time series analysis
+Time Series Analysis
 --------------------
 
 This booklet itells you how to use the R statistical software to carry out some simple analyses
@@ -138,7 +138,6 @@ Similarly, the file `http://robjhyndman.com/tsdldata/data/fancy.dat
 http://robjhyndman.com/tsdldata/data/fancy.dat>`_ contains monthly sales for a souvenir
 shop at a beach resort town in Queensland, Australia, for January 1987-December 1993 (original
 data from Wheelwright and Hyndman, 1998). We can read the data into R by typing:
-We can read the data into R by typing:
 
 .. highlight:: r
 
@@ -226,6 +225,10 @@ described using an additive model.
 
 Decomposing Time Series
 -----------------------
+
+Decomposing a time series means separating it into its constituent components, which
+are usually a trend component and an irregular component, and if it is a seasonal time
+series, a seasonal component.
 
 Decomposing Non-Seasonal Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -363,7 +366,7 @@ component (third from top), and the estimated irregular component (bottom). We s
 a small decrease from about 24 in 1947 to about 22 in 1948, followed by a steady increase from then on to about 27 in 1959.
 
 Seasonally Adjusting
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 If you have a seasonal time series that can be described using an additive model, you can seasonally adjust the time series
 by estimating the seasonal component, and subtracting the estimated seasonal component from the original time series. We can
@@ -387,6 +390,50 @@ We can then plot the seasonally adjusted time series using the "plot()" function
 
 You can see that the seasonal variation has been removed from the seasonally adjusted time series.
 The seasonally adjusted time series now just contains the trend component and an irregular component.
+
+Forecasts using Exponential Smoothing
+-------------------------------------
+
+Exponential smoothing can be used to make short-term forecasts for time series data. 
+
+Simple Exponential Smoothing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you have a time series that can be described using an additive model with constant
+level and no seasonality, you can use simple exponential smoothing to make short-term
+forecasts. 
+
+The simple exponential smoothing method provides a way of estimating the level at the current
+time point. Smoothing is controlled by the parameter &#913; for the estimate of the level
+at the current time point. The value of	&#913; lies between 0 and 1. Values of &#913
+that are close to 0 mean that little weight is placed on the most recent observations
+when making forecasts of future values.
+
+For example, the file `http://robjhyndman.com/tsdldata/hurst/precip1.dat 
+http://robjhyndman.com/tsdldata/hurst/precip1.dat>`_ contains total annual rainfall in
+inches for London, from 1813-1912 (original data from Hipel and McLeod, 1994).
+We can read the data into R and plot it by typing:
+
+::
+
+    > rain <- scan("http://robjhyndman.com/tsdldata/hurst/precip1.dat",skip=1)
+      Read 100 items
+    > rainseries <- ts(rain,start=c(1813))
+    > plot.ts(rainseries)
+
+|image10|
+
+You can see from the plot that there is roughly constant level (the mean stays
+constant at about 25 inches). The random fluctuations in the time series seem to be
+roughly constant in size over time, so it is probably appropriate to describe the
+data using an additive model. Thus, we can make forecasts using simple exponential
+smoothing.
+
+To make forecasts using simple exponential smoothing in R, we can use the 
+"HoltWinters()" function in R. 
+
+holt1 <- HoltWinters(timeseries1, gamma = FALSE, l.start=144, b.start=5) 
+
 
 Links and Further Reading
 -------------------------
@@ -436,4 +483,4 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image7| image:: ../_static/image7.png
 .. |image8| image:: ../_static/image8.png
 .. |image9| image:: ../_static/image9.png
-
+.. |image10| image:: ../_static/image10.png
