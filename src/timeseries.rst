@@ -23,8 +23,8 @@ available by Rob Hyndman in his Time Series Data Library at
 There is a pdf version of this booklet available at
 `https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf>`_.
 
-Reading in Time Series Data into R
-----------------------------------
+Reading Time Series Data
+------------------------
 
 The first thing that you will want to do to analyse your time series data will be to read
 it into R, and to plot the time series. You can read data into R using the scan() function,
@@ -157,8 +157,8 @@ We can read the data into R by typing:
       1992   7615.03   9849.69  14558.40  11587.33   9332.56  13082.09  16732.78  19888.61  23933.38  25391.35  36024.80  80721.71
       1993  10243.24  11266.88  21826.84  17357.33  15997.79  18601.53  26155.15  28586.52  30505.41  30821.33  46634.38 104660.67
 
-Plotting a Time Series in R
----------------------------
+Plotting Time Series 
+--------------------
 
 Once you have read a time series into R, the next step is usually to make a plot of the time series
 data, which you can do with the plot.ts() function in R.
@@ -224,8 +224,12 @@ the log-transformed time series seem to be roughly constant over time, and do no
 on the level of the time series. Thus, the log-transformed time series can probably be
 described using an additive model. 
 
-Estimating the Trend Component of a Non-Seasonal Time Series
-------------------------------------------------------------
+Decomposing Non-Seasonal Data
+-----------------------------
+
+A non-seasonal time series consists of a trend component and an irregular component.
+Decomposing the time series involves trying to separate the time series into these
+components, that is, estimating the the trend component and the irregular component.
 
 To estimate the trend component of a non-seasonal time series that can be described
 using an additive model, it is common to use a smoothing method, such as calculating
@@ -287,8 +291,12 @@ trend component, and we can see that the age of death of the English kings seems
 decreased from about 55 years old to about 38 years old during the reign of the first 20 kings, and
 then increased after that to about 73 years old by the end of the reign of the 40th king in the time series. 
 
-Estimating the Trend and Seasonal Components of a Seasonal Time Series
-----------------------------------------------------------------------
+Decomposing Seasonal Data
+-------------------------
+
+A seasonal time series consists of a trend component, a seasonal component and an irregular
+component. Decomposing the time series means separating the time series into these three
+components: that is, estimating these three components.
 
 To estimate the trend component and seasonal component of a seasonal time series that can be described
 using an additive model, we can use the "decompose()" function in R. This function estimates the trend,
@@ -351,8 +359,8 @@ The plot above shows the original time series (top), the estimated trend compone
 component (third from top), and the estimated irregular component (bottom). We see that the estimated trend component shows
 a small decrease from about 24 in 1947 to about 22 in 1948, followed by a steady increase from then on to about 27 in 1959.
 
-Seasonally Adjusting Time Series Data
--------------------------------------
+Seasonally Adjusting
+--------------------
 
 If you have a seasonal time series that can be described using an additive model, you can seasonally adjust the time series
 by estimating the seasonal component, and subtracting the estimated seasonal component from the original time series. We can
