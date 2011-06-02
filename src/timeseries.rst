@@ -404,8 +404,8 @@ level and no seasonality, you can use simple exponential smoothing to make short
 forecasts. 
 
 The simple exponential smoothing method provides a way of estimating the level at the current
-time point. Smoothing is controlled by the parameter &#913; for the estimate of the level
-at the current time point. The value of	&#913; lies between 0 and 1. Values of &#913
+time point. Smoothing is controlled by the parameter alpha; for the estimate of the level
+at the current time point. The value of	alpha; lies between 0 and 1. Values of alpha
 that are close to 0 mean that little weight is placed on the most recent observations
 when making forecasts of future values.
 
@@ -453,7 +453,7 @@ series of annual rainfall in London, we type:
         [,1]
       a 24.67819
       
-The output of HoltWinters() tells us that the estimated value of the &#913 parameter
+The output of HoltWinters() tells us that the estimated value of the alpha parameter
 is about 0.024. This is very close to zero, telling us that the forecasts are based on
 both recent and less recent observations (although somewhat more weight is placed on recent observations).  
 
