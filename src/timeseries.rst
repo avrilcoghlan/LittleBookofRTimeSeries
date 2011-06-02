@@ -691,7 +691,9 @@ plausible that the forecast errors are normally distributed with mean zero.
 The Ljung-Box test showed that there is little evidence of non-zero autocorrelations in the in-sample
 forecast errors, and the distribution of forecast errors seems to be normally distributed with mean zero.
 This suggests that the simple exponential smoothing method provides an adequate predictive model for London
-rainfall, which probably cannot be improved upon.
+rainfall, which probably cannot be improved upon. Furthermore, the assumptions that the 80% and 95% predictions intervals were based upon 
+(that there are no autocorrelations in the forecast errors, and the forecast errors are normally distributed
+with mean zero and constant variance) are probably valid. 
 
 Holt's Exponential Smoothing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -839,7 +841,8 @@ Thus, the Ljung-Box test shows that there is little evidence of autocorrelations
 while the time plot and histogram of forecast errors show that it is plausible that the forecast errors
 are normally distributed with mean zero and constant variance. Therefore, we can conclude that Holt's
 exponential smoothing provides an adequate predictive model for skirt hem diameters, which probably cannot
-be improved upon.
+be improved upon. In addition, it means that the assumptions that the 80% and 95% predictions intervals were based upon 
+are probably valid.
 
 Links and Further Reading
 -------------------------
