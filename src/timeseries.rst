@@ -627,8 +627,70 @@ lags 1-20, for the in-sample forecast errors for London rainfall data, we type:
       X-squared = 17.4008, df = 20, p-value = 0.6268
 
 Here the Ljung-Box test statistic is 17.4, and the p-value is 0.6, so there is little evidence
-of non-zero autocorrelations in the in-sample forecast errors at lags 1-20. This suggests that
-the simple exponential smoothing method provides an adequate predictive model for London
+of non-zero autocorrelations in the in-sample forecast errors at lags 1-20. 
+
+To be sure that the predictive model cannot be improved upon, it is also a good idea to check
+whether the forecast errors are normally distributed with mean zero and constant variance. To
+check whether the forecast errors have constant variance, we can make a time plot of the in-sample
+forecast errors:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(rainseriesforecasts2$residuals) 
+
+|image18|
+
+The plot shows that the in-sample forecast errors seem to have roughly constant variance over time,
+although the size of the fluctuations in the start of the time series (1820-1830) may be slightly
+less than that at later dates (eg. 1840-1850). 
+
+To check whether the forecast errors are normally distributed with mean zero, we can plot a histogram
+of the forecast errors, with an overlaid normal curve that has mean zero and the same standard deviation as
+the distribution of forecast errors. To do this, we can define an R function "plotForecastErrors()", below:
+
+.. highlight:: r
+
+::
+
+    > plotForecastErrors <- function(forecasterrors)
+      {
+         # make a red histogram of the forecast errors: 
+         mybinsize <- round(IQR(forecasterrors)/4)
+         myiqr  <- IQR(forecasterrors)
+         mymin  <- min(forecasterrors)*3      
+         mymax  <- max(forecasterrors)*3     
+         mybins <- seq(mymin, mymax, mybinsize)
+         hist(forecasterrors, col="red", freq=FALSE, breaks=mybins) # freq=FALSE ensures the area under the histogram = 1
+         mysd   <- sd(forecasterrors)
+         # generate normally distributed data with mean 0 and standard deviation mysd
+         mynorm <- rnorm(10000, mean=0, sd=mysd)
+         myhist <- hist(mynorm, plot=FALSE, breaks=mybins) 
+         # plot the normal curve as a blue line on top of the histogram of forecast errors:
+         points(myhist$mids, myhist$density, type="l", col="blue", lwd=2) 
+      } 
+
+You will have to copy the function above into R in order to use it. 
+You can then use plotForecastErrors() to plot a histogram (with overlaid normal curve) 
+of the forecast errors for the rainfall predictions:
+
+.. highlight:: r
+
+::
+
+    > plotForecastErrors(rainseriesforecasts2$residuals)
+
+|image19|
+
+The plot shows that the distribution of forecast errors is roughly centred on zero, and
+is more or less normally distributed, although it seems to be slightly skewed to the right
+compared to a normal curve. However, the right skew is relatively small, and so it is 
+plausible that the forecast errors are normally distributed with mean zero.
+
+The Ljung-Box test showed that there is little evidence of non-zero autocorrelations in the in-sample
+forecast errors, and the distribution of forecast errors seems to be normally distributed with mean zero.
+This suggests that the simple exponential smoothing method provides an adequate predictive model for London
 rainfall, which probably cannot be improved upon.
 
 Holt's Exponential Smoothing
@@ -649,6 +711,7 @@ An example of a time series that can probably be described using an additive mod
 a trend and no seasonality is the time series of the annual diameter of women's skirts
 at the hem, from 1866 to 1911. The data is available in the file `http://robjhyndman.com/tsdldata/roberts/skirts.dat <http://robjhyndman.com/tsdldata/roberts/skirts.dat>`_ (original data from
 Hipel and McLeod, 1994). 
+
 
 We can read in and plot the data in R by typing:
 
@@ -750,7 +813,31 @@ Here the correlogram shows that the sample autocorrelation for the in-sample for
 at lag 5 exceeds the significance bounds. However, we would expect one in 20 of the autocorrelations
 for the first twenty lags to exceed the 95% significance bounds by chance alone. Indeed, when we carry
 out the Ljung-Box test, the p-value is 0.47, indicating that there is little evidence of non-zero
-autocorrelations in the in-sample forecast errors at lags 1-20. Thus, we can conclude that Holt's
+autocorrelations in the in-sample forecast errors at lags 1-20. 
+
+As for simple exponential smoothing, we should also check that the forecast errors have constant
+variance over time, and are normally distributed with mean zero. We can do this by making a time
+plot of forecast errors, and a histogram of the distribution of forecast errors with an overlaid
+normal curve:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(skirtsseriesforecasts2$residuals)            # make a time plot
+    > plotForecastErrors(skirtsseriesforecasts2$residuals) # make a histogram with overlaid normal curve
+
+|image20|
+
+|image21|
+
+The time plot of forecast errors shows that the forecast errors have roughly constant variance over time.
+The histogram of forecast errors show that it is plausible that the forecast errors are normally distributed
+with mean zero and constant variance. 
+
+Thus, the Ljung-Box test shows that there is little evidence of autocorrelations in the forecast errors,
+while the time plot and histogram of forecast errors show that it is plausible that the forecast errors
+are normally distributed with mean zero and constant variance. Therefore, we can conclude that Holt's
 exponential smoothing provides an adequate predictive model for skirt hem diameters, which probably cannot
 be improved upon.
 
