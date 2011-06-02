@@ -429,7 +429,8 @@ roughly constant in size over time, so it is probably appropriate to describe th
 data using an additive model. Thus, we can make forecasts using simple exponential
 smoothing.
 
-To make forecasts using simple exponential smoothing in R, we can use the 
+To make forecasts using simple exponential smoothing in R, we can fit a simple exponential
+smoothing predictive model using the 
 "HoltWinters()" function in R. To use HoltWinters() for simple exponential smoothing,
 we need to set the parameters beta=FALSE and gamma=FALSE in the HoltWinters() function
 (the beta and gamma parameters are used for Holt's exponential smoothing, or
@@ -630,6 +631,131 @@ of non-zero autocorrelations in the in-sample forecast errors at lags 1-20. This
 the simple exponential smoothing method provides an adequate predictive model for London
 rainfall, which probably cannot be improved upon.
 
+Holt's Exponential Smoothing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you have a time series that can be described using an additive model with increasing or
+decreasing trend and no seasonality, you can use Holt's exponential smoothing to make short-term
+forecasts. 
+
+Holt's exponential smoothing estimates the level and slope at the current time point. Smoothing
+is controlled by two parameters, alpha, for the estimate of the level at the current time point,
+and beta for the estimate of the slope b of the trend component at the current time point.
+As with simple exponential smoothing, the paramters alpha and beta have values between 0 and 1,
+and values that are close to 0 mean that little weight is placed on the most recent observations
+when making forecasts of future values.
+
+An example of a time series that can probably be described using an additive model with a
+a trend and no seasonality is the time series of the annual diameter of women's skirts
+at the hem, from 1866 to 1911. The data is available in the file
+ `http://robjhyndman.com/tsdldata/roberts/skirts.dat
+<http://robjhyndman.com/tsdldata/roberts/skirts.dat>`_ (original data from
+Hipel and McLeod, 1994). 
+
+We can read in and plot the data in R by typing:
+
+::
+
+    > skirts <- scan("http://robjhyndman.com/tsdldata/roberts/skirts.dat",skip=5)
+      Read 46 items
+    > skirtsseries <- ts(skirts,start=c(1866))
+    > plot.ts(skirtsseries)
+
+|image14|
+
+We can see from the plot that there was an increase in hem diameter from about 600 in
+1866 to about 1050 in 1880, and that afterwards the hem diameter decreased to about 520 in
+1911. 
+
+To make forecasts, we can fit a predictive model using the HoltWinters() function in R. 
+To use HoltWinters() for Holt's exponential smoothing, we need to set the parameter gamma=FALSE 
+(the gamma parameter is used for Holt-Winters exponential smoothing, as described below).
+
+For example, to use Holt's exponential smoothing to fit a predictive model for skirt hem
+diameter, we type:
+
+::
+
+    > skirtsseriesforecasts <- HoltWinters(skirtsseries, gamma=FALSE)
+    > skirtsseriesforecasts 
+      Smoothing parameters:
+      alpha:  0.8383481 
+      beta :  1 
+      gamma:  FALSE 
+      Coefficients:
+        [,1]
+      a 529.308585
+      b   5.690464
+    > skirtsseriesforecasts$SSE 
+      [1] 16954.18
+
+The estimated value of alpha is 0.84, and of beta is 1.00. These are both high, telling us that
+both the estimate of the current value of the level, and of the slope b of the trend component,
+are based mostly upon very recent observations in the time series. This makes good intuitive sense,
+since the level and the slope of the time series both change quite a lot over time. The 
+value of the sum-of-squared-errors for the in-sample forecast errors is 16954. 
+
+We can plot the original time series as a black line, with the forecasted values as a red line
+on top of that, by typing:
+
+::
+
+    > plot(skirtsseriesforecasts) 
+
+|image15|
+
+We can see from the picture that the in-sample forecasts agree pretty well with the observed values,
+although they tend to lag behind the observed values a little bit. 
+
+If you wish, you can specify the initial values of the level and the slope b of the trend component by
+using the "l.start" and "b.start" arguments for the HoltWinters() function. It is common to set the
+initial value of the level to the first value in the time series (608 for the skirts data), and the 
+initial value of the slope to the second value minus the first value (9 for the skirts data). For example,
+to fit a predictive model to the skirt hem data using Holt's exponential smoothing, with initial values
+of 608 for the level and 9 for the slope b of the trend component, we type:
+
+::
+
+    > HoltWinters(skirtsseries, gamma=FALSE, l.start=608, b.start=9)
+
+As for simple exponential smoothing, we can make forecasts for future times not covered
+by the original time series by using the forecast.HoltWinters() function in the "forecast" package.
+For example, our time series data for skirt hems was for 1866 to 1911, so we can make predictions
+for 1912 to 1930 (19 more data points), and plot them, by typing: 
+
+::
+
+    > skirtsseriesforecasts2 <- forecast.HoltWinters(skirtsseriesforecasts, h=19)
+    > plot(skirtsseriesforecasts2) 
+
+|image16|
+
+The forecasts are shown as a blue line, with the 80% prediction intervals as an orange
+shaded area, and the 95% prediction intervals as a yellow shaded area.
+
+As for simple exponential smoothing, we can check whether the predictive model could
+be improved upon by checking whether the in-sample forecast errors show non-zero autocorrelations
+at lags 1-20. For example, for the skirt hem data, we can make a correlogram, and carry out
+the Ljung-Box test, by typing:
+
+::
+
+    > acf(skirtsseriesforecasts2$residuals, lag.max=20)
+    > Box.test(skirtsseriesforecasts2$residuals, lag=20, type="Ljung-Box")
+        Box-Ljung test
+      data:  skirtsseriesforecasts2$residuals 
+      X-squared = 19.7312, df = 20, p-value = 0.4749
+    
+|image17|
+
+Here the correlogram shows that the sample autocorrelation for the in-sample forecast errors
+at lag 5 exceeds the significance bounds. However, we would expect one in 20 of the autocorrelations
+for the first twenty lags to exceed the 95% significance bounds by chance alone. Indeed, when we carry
+out the Ljung-Box test, the p-value is 0.47, indicating that there is little evidence of non-zero
+autocorrelations in the in-sample forecast errors at lags 1-20. Thus, we can conclude that Holt's
+exponential smoothing provides an adequate predictive model for skirt hem diameters, which probably cannot
+be improved upon.
+
 Links and Further Reading
 -------------------------
 
@@ -683,4 +809,8 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image12| image:: ../_static/image12.png
 .. |image13| image:: ../_static/image13.png
 .. |image13| image:: ../_static/image13.png
+.. |image14| image:: ../_static/image14.png
+.. |image15| image:: ../_static/image15.png
+.. |image16| image:: ../_static/image16.png
+.. |image17| image:: ../_static/image17.png
 
