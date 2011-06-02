@@ -374,6 +374,9 @@ We can then plot the seasonally adjusted time series using the "plot()" function
 
 |image9|
 
+You can see that the seasonal variation has been removed from the seasonally adjusted time series.
+The seasonally adjusted time series now just contains the trend component and an irregular component.
+
 Links and Further Reading
 -------------------------
 
