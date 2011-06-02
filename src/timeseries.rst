@@ -898,4 +898,7 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image15| image:: ../_static/image15.png
 .. |image16| image:: ../_static/image16.png
 .. |image17| image:: ../_static/image17.png
-
+.. |image18| image:: ../_static/image18.png
+.. |image19| image:: ../_static/image19.png
+.. |image20| image:: ../_static/image20.png
+.. |image21| image:: ../_static/image21.png
