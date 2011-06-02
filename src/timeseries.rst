@@ -135,7 +135,7 @@ We can read the data into R, and store it as a time series object, by typing:
       1959 26.076 25.286 27.660 25.951 26.398 25.565 28.865 30.000 29.261 29.012 26.992 27.897   
 
 Similarly, the file `http://robjhyndman.com/tsdldata/data/fancy.dat 
-http://robjhyndman.com/tsdldata/data/fancy.dat>`_ contains monthly sales for a souvenir
+<http://robjhyndman.com/tsdldata/data/fancy.dat>`_ contains monthly sales for a souvenir
 shop at a beach resort town in Queensland, Australia, for January 1987-December 1993 (original
 data from Wheelwright and Hyndman, 1998). We can read the data into R by typing:
 
