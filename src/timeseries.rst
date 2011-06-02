@@ -580,6 +580,56 @@ To plot the predictions made by forecast.HoltWinters(), we can use the "plot()" 
 Here the forecasts for 1913-1920 are plotted as a blue line, the 80% prediction interval
 as an orange shaded area, and the 95% prediction interval as a yellow shaded area.
 
+The 'forecast errors' are calculated as the observed values minus predicted values, for
+each time point. We can only calculate the forecast errors for the time period covered
+by our original time series, which is 1813-1912 for the rainfall data. As mentioned above,
+one measure of the accuracy of the predictive model is the sum-of-squared-errors (SSE) for
+the in-sample forecast errors. 
+
+The in-sample forecast errors are stored in the named element "residuals" of the list
+variable returned by forecast.HoltWinters(). If the predictive model cannot be improved upon,
+there should be no correlations between forecast errors for successive predictions.  
+In other words, if there are correlations between forecast errors for successive predictions,
+it is likely that the simple exponential smoothing forecasts could be improved upon by another
+forecasting technique. 
+
+To figure out whether this is the case, we can obtain a correlogram of the in-sample
+forecast errors for lags 1-20. We can calculate a correlogram of the forecast errors using the 
+"acf()" function in R. To specify the maximum lag that we want to look at, we use the "lag.max"
+parameter in acf(). 
+
+For example, to calculate a correlogram of the in-sample forecast errors for the
+London rainfall data for lags 1-20, we type:
+
+.. highlight:: r
+
+::
+
+    > acf(rainseriesforecasts2$residuals, lag.max=20)
+
+|image13|
+
+You can see from the sample correlogram that the autocorrelation at lag 3 is just touching
+the significance bounds. To test whether there is significant evidence for non-zero correlations
+at lags 1-20, we can carry out a Ljung-Box test. This can be done in R using the "Box.test()", 
+function. The maximum lag that we want to look at is specified using the "lag" parameter in the
+Box.test() function. For example, to test whether there are non-zero autocorrelations at
+lags 1-20, for the in-sample forecast errors for London rainfall data, we type:
+
+.. highlight:: r
+
+::
+
+    > Box.test(rainseriesforecasts2$residuals, lag=20, type="Ljung-Box")
+        Box-Ljung test
+      data:  rainseriesforecasts2$residuals 
+      X-squared = 17.4008, df = 20, p-value = 0.6268
+
+Here the Ljung-Box test statistic is 17.4, and the p-value is 0.6, so there is little evidence
+of non-zero autocorrelations in the in-sample forecast errors at lags 1-20. This suggests that
+the simple exponential smoothing method provides an adequate predictive model for London
+rainfall, which probably cannot be improved upon.
+
 Links and Further Reading
 -------------------------
 
@@ -631,3 +681,6 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image10| image:: ../_static/image10.png
 .. |image11| image:: ../_static/image11.png
 .. |image12| image:: ../_static/image12.png
+.. |image13| image:: ../_static/image13.png
+.. |image13| image:: ../_static/image13.png
+
