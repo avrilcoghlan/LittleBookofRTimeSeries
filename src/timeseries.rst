@@ -501,8 +501,6 @@ We can plot the original time series against the forecasts by typing:
 The plot shows the original time series in black, and the forecasts as a red line.
 The time series of forecasts is much smoother than the time series of the original data here.
 
-xxx
-
 As a measure of the accuracy of the forecasts, we can calculate the sum of squared
 errors for the in-sample forecast errors, that is, the forecast errors for the time
 period covered by our original time series. The sum-of-squared-errors is stored in a 
@@ -513,6 +511,74 @@ its value by typing:
 
     > rainseriesforecasts$SSE
       [1] 1828.855
+
+That is, here the sum-of-squared-errors is 1828.855.
+
+It is common in simple exponential smoothing to use the first value in the time series
+as the initial value for the level. For example, in the time series for rainfall in London,
+the first value is 23.56 (inches) for rainfall in 1813. You can specify the initial value
+for the level in the HoltWinters() function by using the "l.start" parameter. For example,
+to make forecasts with the initial value of the level set to 23.56, we type:
+
+::
+
+    > HoltWinters(rainseries, beta=FALSE, gamma=FALSE, l.start=23.56)
+
+As explained above, by default HoltWinters() just makes forecasts for the time period
+covered by the original data, which is 1813-1912 for the rainfall time series. We can
+make forecasts for further time points by using the "forecast.HoltWinters()" function in 
+the R "forecast" package. To use the forecast.HoltWinters() function, we first need to install 
+the "forecast" R package (for instructions on how to install an R package, see `How to install an R package 
+<./installr.html#how-to-install-an-r-package>`_).
+
+Once you have installed the "forecast" R package, you can load the "forecast" R package by typing:
+
+.. highlight:: r
+
+::
+
+    > library("forecast")
+
+When using the forecast.HoltWinters() function, as its first argument (input), you pass it
+the predictive model that you have already fitted using the HoltWinters() function. For example,
+in the case of the rainfall time series, we stored the predictive model made using HoltWinters()
+in the variable "rainseriesforecasts". You specify how many further time points you want to make 
+forecasts for by using the "h" parameter in forecast.HoltWinters(). For example, to make a forecast
+of rainfall for the years 1814-1820 (8 more years) using forecast.HoltWinters(), we type:
+
+.. highlight:: r
+
+::
+
+    > rainseriesforecasts2 <- forecast.HoltWinters(rainseriesforecasts, h=8) 
+    > rainseriesforecasts2
+     Point     Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+     1913       24.67819 19.17493 30.18145 16.26169 33.09470
+     1914       24.67819 19.17333 30.18305 16.25924 33.09715
+     1915       24.67819 19.17173 30.18465 16.25679 33.09960
+     1916       24.67819 19.17013 30.18625 16.25434 33.10204
+     1917       24.67819 19.16853 30.18785 16.25190 33.10449
+     1918       24.67819 19.16694 30.18945 16.24945 33.10694
+     1919       24.67819 19.16534 30.19105 16.24701 33.10938
+     1920       24.67819 19.16374 30.19265 16.24456 33.11182
+      
+The forecast.HoltWinters() function gives you the forecast for a year, a 80% prediction
+interval for the forecast, and a 95% prediction interval for the forecast. For example,
+the forecasted rainfall for 1920 is about 24.68 inches, with a 95% prediction interval of
+(16.24, 33.11). 
+
+To plot the predictions made by forecast.HoltWinters(), we can use the "plot()" function:
+
+.. highlight:: r
+
+::
+
+    > plot(rainseriesforecasts2) 
+
+|image12|
+
+Here the forecasts for 1913-1920 are plotted as a blue line, the 80% prediction interval
+as an orange shaded area, and the 95% prediction interval as a yellow shaded area.
 
 Links and Further Reading
 -------------------------
@@ -564,3 +630,4 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image9| image:: ../_static/image9.png
 .. |image10| image:: ../_static/image10.png
 .. |image11| image:: ../_static/image11.png
+.. |image12| image:: ../_static/image12.png
