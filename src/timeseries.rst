@@ -224,8 +224,11 @@ the log-transformed time series seem to be roughly constant over time, and do no
 on the level of the time series. Thus, the log-transformed time series can probably be
 described using an additive model. 
 
+Decomposing Time Series
+-----------------------
+
 Decomposing Non-Seasonal Data
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A non-seasonal time series consists of a trend component and an irregular component.
 Decomposing the time series involves trying to separate the time series into these
@@ -292,7 +295,7 @@ decreased from about 55 years old to about 38 years old during the reign of the 
 then increased after that to about 73 years old by the end of the reign of the 40th king in the time series. 
 
 Decomposing Seasonal Data
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A seasonal time series consists of a trend component, a seasonal component and an irregular
 component. Decomposing the time series means separating the time series into these three
