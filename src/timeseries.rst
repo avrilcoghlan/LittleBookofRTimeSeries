@@ -647,9 +647,7 @@ when making forecasts of future values.
 
 An example of a time series that can probably be described using an additive model with a
 a trend and no seasonality is the time series of the annual diameter of women's skirts
-at the hem, from 1866 to 1911. The data is available in the file
- `http://robjhyndman.com/tsdldata/roberts/skirts.dat
-<http://robjhyndman.com/tsdldata/roberts/skirts.dat>`_ (original data from
+at the hem, from 1866 to 1911. The data is available in the file `http://robjhyndman.com/tsdldata/roberts/skirts.dat <http://robjhyndman.com/tsdldata/roberts/skirts.dat>`_ (original data from
 Hipel and McLeod, 1994). 
 
 We can read in and plot the data in R by typing:
