@@ -847,7 +847,7 @@ are probably valid.
 Links and Further Reading
 -------------------------
 
-Some links are included here for further reading.
+Here are some links for further reading.
 
 For a more in-depth introduction to R, a good online tutorial is
 available on the "Kickstarting R" website,
