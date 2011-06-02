@@ -410,7 +410,7 @@ that are close to 0 mean that little weight is placed on the most recent observa
 when making forecasts of future values.
 
 For example, the file `http://robjhyndman.com/tsdldata/hurst/precip1.dat 
-http://robjhyndman.com/tsdldata/hurst/precip1.dat>`_ contains total annual rainfall in
+<http://robjhyndman.com/tsdldata/hurst/precip1.dat>`_ contains total annual rainfall in
 inches for London, from 1813-1912 (original data from Hipel and McLeod, 1994).
 We can read the data into R and plot it by typing:
 
