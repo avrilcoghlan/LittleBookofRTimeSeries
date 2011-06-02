@@ -430,10 +430,89 @@ data using an additive model. Thus, we can make forecasts using simple exponenti
 smoothing.
 
 To make forecasts using simple exponential smoothing in R, we can use the 
-"HoltWinters()" function in R. 
+"HoltWinters()" function in R. To use HoltWinters() for simple exponential smoothing,
+we need to set the parameters beta=FALSE and gamma=FALSE in the HoltWinters() function
+(the beta and gamma parameters are used for Holt's exponential smoothing, or
+Holt-Winters exponential smoothing, as described below). 
 
-holt1 <- HoltWinters(timeseries1, gamma = FALSE, l.start=144, b.start=5) 
+The HoltWinters() function returns a list variable, that contains several named
+elements. 
 
+For example, to use simple exponential smoothing to make forecasts for the time
+series of annual rainfall in London, we type:
+
+::
+
+    > rainseriesforecasts <- HoltWinters(rainseries, beta=FALSE, gamma=FALSE)
+    > rainseriesforecasts
+      Smoothing parameters:
+      alpha:  0.02412151 
+      beta :  FALSE 
+      gamma:  FALSE 
+      Coefficients:
+        [,1]
+      a 24.67819
+      
+The output of HoltWinters() tells us that the estimated value of the &#913 parameter
+is about 0.024. This is very close to zero, telling us that the forecasts are based on
+both recent and less recent observations (although somewhat more weight is placed on recent observations).  
+
+By default, HoltWinters() just makes forecasts for the same time period covered by
+our original time series. In this case, our original time series included rainfall
+for London from 1813-1912, so the forecasts are also for 1813-1912. 
+
+In the example above, we have stored the output of the HoltWinters() function in the list variable 
+"rainseriesforecasts". The forecasts made by HoltWinters() are stored in a named element
+of this list variable called "fitted", so we can get their values by typing:
+
+::
+
+    > rainseriesforecasts$fitted
+      Time Series:
+      Start = 1814 
+      End = 1912 
+      Frequency = 1 
+         xhat    level
+      1814 23.56000 23.56000
+      1815 23.62054 23.62054
+      1816 23.57808 23.57808
+      1817 23.76290 23.76290
+      1818 23.76017 23.76017
+      1819 23.76306 23.76306
+      1820 23.82691 23.82691
+      ...
+      1905 24.62852 24.62852
+      1906 24.58852 24.58852
+      1907 24.58059 24.58059
+      1908 24.54271 24.54271
+      1909 24.52166 24.52166
+      1910 24.57541 24.57541
+      1911 24.59433 24.59433
+      1912 24.59905 24.59905
+     
+We can plot the original time series against the forecasts by typing:
+
+::
+
+    > plot(rainseriesforecasts)
+
+|image11|
+
+The plot shows the original time series in black, and the forecasts as a red line.
+The time series of forecasts is much smoother than the time series of the original data here.
+
+xxx
+
+As a measure of the accuracy of the forecasts, we can calculate the sum of squared
+errors for the in-sample forecast errors, that is, the forecast errors for the time
+period covered by our original time series. The sum-of-squared-errors is stored in a 
+named element of the list variable "rainseriesforecasts" called "SSE", so we can get 
+its value by typing:
+
+::
+
+    > rainseriesforecasts$SSE
+      [1] 1828.855
 
 Links and Further Reading
 -------------------------
@@ -484,3 +563,4 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image8| image:: ../_static/image8.png
 .. |image9| image:: ../_static/image9.png
 .. |image10| image:: ../_static/image10.png
+.. |image11| image:: ../_static/image11.png
