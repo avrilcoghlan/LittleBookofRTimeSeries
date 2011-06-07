@@ -657,8 +657,7 @@ the distribution of forecast errors. To do this, we can define an R function "pl
     > plotForecastErrors <- function(forecasterrors)
       {
          # make a red histogram of the forecast errors: 
-         mybinsize <- round(IQR(forecasterrors)/4)
-         myiqr  <- IQR(forecasterrors)
+         mybinsize <- IQR(forecasterrors)/4
          mymin  <- min(forecasterrors)*3      
          mymax  <- max(forecasterrors)*3     
          mybins <- seq(mymin, mymax, mybinsize)
@@ -710,7 +709,7 @@ and values that are close to 0 mean that little weight is placed on the most rec
 when making forecasts of future values.
 
 An example of a time series that can probably be described using an additive model with a
-a trend and no seasonality is the time series of the annual diameter of women's skirts
+trend and no seasonality is the time series of the annual diameter of women's skirts
 at the hem, from 1866 to 1911. The data is available in the file `http://robjhyndman.com/tsdldata/roberts/skirts.dat <http://robjhyndman.com/tsdldata/roberts/skirts.dat>`_ (original data from
 Hipel and McLeod, 1994). 
 
@@ -844,6 +843,140 @@ exponential smoothing provides an adequate predictive model for skirt hem diamet
 be improved upon. In addition, it means that the assumptions that the 80% and 95% predictions intervals were based upon 
 are probably valid.
 
+Holt-Winters Exponential Smoothing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If you have a time series that can be described using an additive model with increasing or decreasing trend and
+seasonality, you can use Holt-Winters exponential smoothing to make short-term forecasts.
+
+Holt-Winters exponential smoothing estimates the level, slope and seasonal component at the current time point.
+Smoothing is controlled by three parameters: alpha, beta, and gamma, for the estimates of the level, slope b
+of the trend component, and the seasonal component, respectively, at the current time point. The parameters
+alpha, beta and gamma all have values between 0 and 1, and values that are close to 0 mean that 
+relatively little weight is placed on the most recent observations when making forecasts of future values.
+
+An example of a time series that can probably be described using an additive model with a trend and seasonality
+is the time series of the log of monthly sales for the souvenir shop at a beach resort town in Queensland, Australia
+(discussed above):
+
+|image5|
+
+To make forecasts, we can fit a predictive model using the HoltWinters() function. For example, to fit a predictive
+model for the log of the monthly sales in the souvenir shop, we type:
+
+.. highlight:: r
+
+::
+
+    > logsouvenirtimeseries <- log(souvenirtimeseries)
+    > souvenirtimeseriesforecasts <- HoltWinters(logsouvenirtimeseries)
+    > souvenirtimeseriesforecasts
+      Holt-Winters exponential smoothing with trend and additive seasonal component.
+      Smoothing parameters:
+      alpha:  0.413418 
+      beta :  0 
+      gamma:  0.9561275 
+      Coefficients:
+           [,1]
+       a   10.37661961
+       b    0.02996319
+       s1  -0.80952063
+       s2  -0.60576477
+       s3   0.01103238
+       s4  -0.24160551
+       s5  -0.35933517
+       s6  -0.18076683
+       s7   0.07788605
+       s8   0.10147055
+       s9   0.09649353
+       s10  0.05197826
+       s11  0.41793637
+       s12  1.18088423
+    > souvenirtimeseriesforecasts$SSE
+      2.011491
+
+The estimated values of alpha, beta and gamma are 0.41, 0.00, and 0.96, respectively. The
+value of alpha (0.41) is relatively low, indicating that the estimate of the level at the current time
+point is based upon both recent observations and some observations in the more distant past. The value of beta is 0.00, indicating that
+the estimate of the slope b of the trend component is not updated over the time series, and instead
+is set equal to its initial value. This makes good intuitive sense, as the level changes quite a bit
+over the time series, but the slope b of the trend component remains roughly the same. 
+In contrast, the  value of gamma (0.96) is high, indicating that the estimate of the seasonal component at the current
+time point is just based upon very recent observations. 
+
+As for simple exponential smoothing and Holt's exponential smoothing, we can plot the original time series
+as a black line, with the forecasted values as a red line on top of that:
+
+.. highlight:: r
+
+::
+
+    > plot(souvenirtimeseriesforecasts) 
+
+|image22|
+
+We see from the plot that the Holt-Winters exponential method is very successful in predicting
+the seasonal peaks, which occur roughly in November every year. 
+
+To make forecasts for future times not included in the original time series, we use the 
+"forecast.HoltWinters()" function in the "forecast" package. For example, the original
+data for the souvenir sales is from January 1987 to December 1993. If we wanted to make
+forecasts for January 1994 to December 1998 (48 more months), and plot the forecasts, we would type:
+
+.. highlight:: r
+
+::
+
+    > souvenirtimeseriesforecasts2 <- forecast.HoltWinters(souvenirtimeseriesforecasts, h=48)
+    > plot(souvenirtimeseriesforecasts2)
+
+|image23|
+
+The forecasts are shown as a blue line, and the orange and yellow shaded areas show 80% and
+95% prediction intervals, respectively.
+
+We can investigate whether the predictive model can be improved upon by checking whether the
+in-sample forecast errors show non-zero autocorrelations at lags 1-20, by making a correlogram
+and carrying out the Ljung-Box test:
+
+.. highlight:: r
+
+::
+
+    > acf(souvenirtimeseriesforecasts2$residuals, lag.max=20)
+    > Box.test(souvenirtimeseriesforecasts2$residuals, lag=20, type="Ljung-Box")
+      Box-Ljung test
+      data:  souvenirtimeseriesforecasts2$residuals 
+      X-squared = 17.5304, df = 20, p-value = 0.6183
+
+|image24|
+
+The correlogram shows that the autocorrelations for the in-sample forecast errors do not exceed
+the significance bounds for lags 1-20. Furthermore, the p-value for Ljung-Box test is 0.6, indicating
+that there is little evidence of non-zero autocorrelations at lags 1-20.
+
+We can check whether the forecast errors have constant variance over time, and are normally distributed
+with mean zero, by making a time plot of the forecast errors and a histogram (with overlaid normal curve):
+
+.. highlight:: r
+
+::
+
+    > plot.ts(souvenirtimeseriesforecasts2$residuals)            # make a time plot
+    > plotForecastErrors(souvenirtimeseriesforecasts2$residuals) # make a histogram with overlaid normal curve
+
+|image25|
+|image26|
+
+From the time plot, it appears plausible that the forecast errors have constant variance over time.
+From the histogram of forecast errors, it seems plausible that the forecast errors are normally
+distributed with mean zero.
+
+Thus,there is little evidence of autocorrelation at lags 1-20 for the forecast errors, and
+the forecast errors appear to be normally distributed with mean zero and constant variance over time.
+This suggests that Holt-Winters exponential smoothing provides an adequate predictive model of the
+log of sales at the souvenir shop, which probably cannot be improved upon. Furthermore, the assumptions
+upon which the prediction intervals were based are probably valid.
+
 Links and Further Reading
 -------------------------
 
@@ -905,3 +1038,8 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image19| image:: ../_static/image19.png
 .. |image20| image:: ../_static/image20.png
 .. |image21| image:: ../_static/image21.png
+.. |image22| image:: ../_static/image22.png
+.. |image23| image:: ../_static/image23.png
+.. |image24| image:: ../_static/image24.png
+.. |image25| image:: ../_static/image25.png
+.. |image26| image:: ../_static/image26.png
