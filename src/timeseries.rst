@@ -1001,7 +1001,7 @@ If you have to difference the time series d times to obtain a stationary series,
 ARIMA(p,d,q) model, where d is the order of differencing used. 
 
 You can difference a time series using the "diff()" function in R. For example, the time series of
-the annual diameter of women’s skirts at the hem, from 1866 to 1911 is not stationary in mean, as the
+the annual diameter of women's skirts at the hem, from 1866 to 1911 is not stationary in mean, as the
 level changes a lot over time:
 
 |image14|
@@ -1030,6 +1030,63 @@ The time series of second differences (above) does appear to be stationary in me
 as the level of the series stays roughly constant over time, and the variance of the series appears
 roughly constant over time. Thus, it appears that we need to difference the time series of the diameter of skirts
 twice in order to achieve a stationary series. 
+
+If you need to difference your original time series data d times in order to obtain a stationary
+time series, this means that you can use an ARIMA(p,d,q) model for your time series, where d is 
+the order of differencing used. For example, for the time series of the diameter of women's skirts,
+we had to difference the time series twice, and so the order of differencing (d) is 2. This means
+that you can use an ARIMA(p,2,q) model for your time series. The next step is to figure out the
+values of p and q for the ARIMA model.
+
+Another example is the time series of the age of death of the successive kings of England (see above):
+
+|image1|
+
+From the time plot (above), we can see that the time series is not stationary in mean. To
+calculate the time series of first differences, and plot it, we type:
+
+::
+
+    > kingtimeseriesdiff1 <- diff(kingstimeseries, differences=1)
+    > plot.ts(kingtimeseriesdiff1) 
+
+|image29|
+
+The time series of first differences appears to be stationary in mean and variance, and so
+an ARIMA(p,1,q) model is probably appropriate for the time series of the age of death of the kings of England.
+
+Selecting an ARIMA Model
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+xxx
+
+If your time series is stationary, or if you have transformed it to a stationary time series
+by differencing d times, the next step is to select the appropriate ARIMA model, which means
+finding the values of most appropriate values of p and q for an ARIMA(p,d,q) model. To do this,
+you usually need to examine the correlogram and partial correlogram of the stationary time series.
+To plot a correlogram and partial correlogram, we can use the "acf()" and "pacf()" functions in R,
+respectively.
+
+For example, to plot the correlogram for lags 1-20 of the twice differenced time series of the diameters of
+skirt hems (which we stored in the variable "skirtseriesdiffs2"), we type:
+
+::
+
+    > acf(skirtsseriesdiff2, lag.max=20)
+
+
+We see from the correlogram that the autocorrelation at lag 1 just exceeds the significance bounds,
+and the autocorrelation at lag 5 exceeds the significance bounds, but all other autocorrelations
+between lags 1-20 do not exceed the significance bounds. 
+
+To plot the partial correlogram for lags 1-20 for the twice differenced time series of skirt hem
+diameters, we use the "pacf()" function, by typing:
+
+::
+
+    > pacf(skirtsseriesdiff2, lag.max=20)
+
+
 
 Links and Further Reading
 -------------------------
@@ -1099,3 +1156,4 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image26| image:: ../_static/image26.png
 .. |image27| image:: ../_static/image27.png
 .. |image28| image:: ../_static/image28.png
+.. |image29| image:: ../_static/image29.png
