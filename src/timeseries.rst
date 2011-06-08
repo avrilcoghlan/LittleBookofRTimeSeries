@@ -977,6 +977,60 @@ This suggests that Holt-Winters exponential smoothing provides an adequate predi
 log of sales at the souvenir shop, which probably cannot be improved upon. Furthermore, the assumptions
 upon which the prediction intervals were based are probably valid.
 
+ARIMA Models
+------------
+
+Exponential smoothing methods are useful for making forecasts, and make no assumptions about
+the correlations between successive values of the time series. However, if you want to make
+prediction intervals for forecasts made using exponential smoothing methods, the prediction
+intervals require that the forecast errors are uncorrelated and are normally distributed with
+mean zero and constant variance.
+
+While exponential smoothing methods do not make any assumptions about correlations between successive
+values of the time series, in some cases you can make a better predictive model by taking correlations
+in the data into account. Autoregressive Integrated Moving Average (ARIMA) models include an explicit
+statistical model for the irregular component of a time series, that allows for non-zero autocorrelations
+in the irregular component.
+
+Differencing a Time Series
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+ARIMA models are defined for stationary time series. Therefore, if you start off with a non-stationary
+time series, you will first need to 'difference' the time series until you obtain a stationary time series.
+If you have to difference the time series d times to obtain a stationary series, then you have an
+ARIMA(p,d,q) model, where d is the order of differencing used. 
+
+You can difference a time series using the "diff()" function in R. For example, the time series of
+the annual diameter of women’s skirts at the hem, from 1866 to 1911 is not stationary in mean, as the
+level changes a lot over time:
+
+|image14|
+
+We can difference the time series (which we stored in "skirtsseries", see above) once, and plot the
+differenced series, by typing:
+
+::
+
+    > skirtsseriesdiff1 <- diff(skirtsseries, differences=1)
+    > plot.ts(skirtsseriesdiff1) 
+
+|image27| 
+
+The resulting time series of first differences (above) does not appear to be stationary in mean.
+Therefore, we can difference the time series twice, to see if that gives us a stationary time series:
+
+::
+
+    > skirtsseriesdiff2 <- diff(skirtsseries, differences=2)
+    > plot.ts(skirtsseriesdiff2) 
+
+|image28| 
+
+The time series of second differences (above) does appear to be stationary in mean and variance,
+as the level of the series stays roughly constant over time, and the variance of the series appears
+roughly constant over time. Thus, it appears that we need to difference the time series of the diameter of skirts
+twice in order to achieve a stationary series. 
+
 Links and Further Reading
 -------------------------
 
@@ -1043,3 +1097,5 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image24| image:: ../_static/image24.png
 .. |image25| image:: ../_static/image25.png
 .. |image26| image:: ../_static/image26.png
+.. |image27| image:: ../_static/image27.png
+.. |image28| image:: ../_static/image28.png
