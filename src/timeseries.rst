@@ -1242,7 +1242,7 @@ model and ARMA(p,q) model are equally good candidate models.
 An ARMA(2,0) model is an autoregressive model of order 2, or AR(2) model. This model can be
 written as: X_t - mu = (Beta1 * (X_t-1 - mu)) + (Beta2 * (Xt-2 - mu)) + Z_t,
 where X_t is the stationary time series we are studying (the time series of volcanic dust veil index),
-mu is the mean of time series X_t, Beta1 and Beta2 are parameters to be estimaetd, and Z_t is white noise with mean
+mu is the mean of time series X_t, Beta1 and Beta2 are parameters to be estimated, and Z_t is white noise with mean
 zero and constant variance.
 
 An AR (autoregressive) model is usually used to model a time series which shows longer term dependencies between
@@ -1378,6 +1378,143 @@ provide an adequate predictive model for the ages at death of English kings.
 Example of the Volcanic Dust Veil in the Northern Hemisphere
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+We discussed above that an appropriate ARIMA model for the time series of volcanic dust veil index
+may be an ARIMA(2,0,0) model. To fit an ARIMA(2,0,0) model to this time series, we can type:
+
+.. highlight:: r
+
+::
+
+    > volcanodustseriesarima <- arima(volcanodustseries, order=c(2,0,0))
+    > volcanodustseriesarima
+      ARIMA(2,0,0) with non-zero mean 
+      Coefficients:
+         ar1      ar2  intercept
+      0.7533  -0.1268    57.5274
+      s.e.  0.0457   0.0458     8.5958
+      sigma^2 estimated as 4870:  log likelihood = -2662.54
+      AIC = 5333.09   AICc = 5333.17   BIC = 5349.7
+
+As mentioned above, an ARIMA(2,0,0) model can be written as:
+written as: X_t - mu = (Beta1 * (X_t-1 - mu)) + (Beta2 * (Xt-2 - mu)) + Z_t,
+where Beta1 and Beta2 are parameters to be estimated. The output of the arima() function
+tells us that Beta1 and Beta2 are estimated as 0.7533 and -0.1268 here (given as ar1 and ar2
+in the output of arima()). 
+
+Now we have fitted the ARIMA(2,0,0) model, we can use the "forecast.ARIMA()" model to
+predict future values of the volcanic dust veil index. The original data includes the
+years 1500-1969. To make predictions for the years 1970-2000 (31 more years), we type:
+
+.. highlight:: r
+
+::
+
+    > volcanodustseriesforecasts <- forecast.Arima(volcanodustseriesarima, h=31)
+    > volcanodustseriesforecasts 
+      Point      Forecast     Lo 80    Hi 80     Lo 95    Hi 95
+      1970       21.48131 -67.94860 110.9112 -115.2899 158.2526
+      1971       37.66419 -74.30305 149.6314 -133.5749 208.9033
+      1972       47.13261 -71.57070 165.8359 -134.4084 228.6737
+      1973       52.21432 -68.35951 172.7881 -132.1874 236.6161
+      1974       54.84241 -66.22681 175.9116 -130.3170 240.0018
+      1975       56.17814 -65.01872 177.3750 -129.1765 241.5327
+      1976       56.85128 -64.37798 178.0805 -128.5529 242.2554
+      1977       57.18907 -64.04834 178.4265 -128.2276 242.6057
+      1978       57.35822 -63.88124 178.5977 -128.0615 242.7780
+      1979       57.44283 -63.79714 178.6828 -127.9777 242.8634
+      1980       57.48513 -63.75497 178.7252 -127.9356 242.9059
+      1981       57.50627 -63.73386 178.7464 -127.9145 242.9271
+      1982       57.51684 -63.72330 178.7570 -127.9040 242.9376
+      1983       57.52212 -63.71802 178.7623 -127.8987 242.9429
+      1984       57.52476 -63.71538 178.7649 -127.8960 242.9456
+      1985       57.52607 -63.71407 178.7662 -127.8947 242.9469
+      1986       57.52673 -63.71341 178.7669 -127.8941 242.9475
+      1987       57.52706 -63.71308 178.7672 -127.8937 242.9479
+      1988       57.52723 -63.71291 178.7674 -127.8936 242.9480
+      1989       57.52731 -63.71283 178.7674 -127.8935 242.9481
+      1990       57.52735 -63.71279 178.7675 -127.8934 242.9481
+      1991       57.52737 -63.71277 178.7675 -127.8934 242.9482
+      1992       57.52738 -63.71276 178.7675 -127.8934 242.9482
+      1993       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      1994       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      1995       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      1996       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      1997       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      1998       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      1999       57.52739 -63.71275 178.7675 -127.8934 242.9482
+      2000       57.52739 -63.71275 178.7675 -127.8934 242.9482
+     
+We can plot the original time series, and the forecasted values, by typing:
+
+.. highlight:: r
+
+::
+
+    > plot.forecast(volcanodustseriesforecasts)
+
+|image39|
+
+One worrying thing is that the model has predicted negative values for
+the volcanic dust veil index, but this variable can only have positive values!
+The reason is that the arima() and forecast.Arima() functions don't know that the variable
+can only take positive values. Clearly, this is not a very desirable feature of our
+current predictive model.
+
+Again, we should investigate whether the forecast errors seem to be correlated, and
+whether they are normally distributed with mean zero and constant variance. To check
+for correlations between successive forecast errors, we can make a correlogram and use
+the Ljung-Box test:
+
+.. highlight:: r
+
+::
+
+    > acf(volcanodustseriesforecasts$residuals, lag.max=20)
+    > Box.test(volcanodustseriesforecasts$residuals, lag=20, type="Ljung-Box")
+      Box-Ljung test
+      data:  volcanodustseriesforecasts$residuals 
+      X-squared = 24.3642, df = 20, p-value = 0.2268
+
+|image40|
+
+The correlogram shows that the sample autocorrelation at lag 20 exceeds the significance
+bounds. However, this is probably due to chance, since we would expect one out of 20 sample
+autocorrelations to exceed the 95% significance bounds. Furthermore, the p-value for the
+Ljung-Box test is 0.2, indicating that there is little evidence for non-zero autocorrelations
+in the forecast errors for lags 1-20.
+
+To check whether the forecast errors are normally distributed with mean zero and constant
+variance, we make a time plot of the forecast errors, and a histogram:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(volcanodustseriesforecasts$residuals)            # make a time plot of the forecast errors
+    > plotForecastErrors(volcanodustseriesforecasts$residuals) # make a histogram (with overlaid normal curve)
+
+|image41|
+
+|image42|
+
+The time plot of forecast errors shows that the forecast errors seem to have roughly
+constant variance over time. However, the time series of forecast errors seems to have
+ a negative mean, rather than a zero mean. We can confirm this by calculating the mean
+ forecast error, which turns out to be about -0.22:
+
+.. highlight:: r
+
+::
+
+    > mean(volcanodustseriesforecasts$residuals)
+      -0.2205417
+
+The histogram of forecast errors (above) shows that although the mean value of the forecast
+errors is negative, the distribution of forecast errors is skewed to the right compared to
+a normal curve. Therefore, it seems that we cannot comfortably conclude that the forecast
+errors are normally distributed with mean zero and constant variance! Thus, it is likely
+that our ARIMA(2,0,0) model for the time series of volcanic dust veil index is not 
+the best model that we could make, and could almost definitely be improved upon!
 
 Links and Further Reading
 -------------------------
@@ -1395,6 +1532,13 @@ available on the "Introduction to R" website,
 To learn about time series analysis, I would highly recommend the book "Time 
 series" (product code M249/02) by the Open University, available from `the Open University Shop
 <http://www.ouw.co.uk/store/>`_.
+
+There are two books available in the "Use R!" series on using R for time series analyses, the first
+is `Introductory Time Series with R <http://www.springer.com/statistics/statistical+theory+and+methods/book/978-0-387-88697-8>`_
+by Cowpertwait and Metcalfe, and the second is 
+`Analysis of Integrated and Cointegrated Time Series with R
+<http://www.springer.com/statistics/statistical+theory+and+methods/book/978-0-387-75966-1>`_
+by Pfaff. 
 
 Acknowledgements
 ----------------
@@ -1457,4 +1601,8 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image36| image:: ../_static/image36.png
 .. |image37| image:: ../_static/image37.png
 .. |image38| image:: ../_static/image38.png
+.. |image39| image:: ../_static/image39.png
+.. |image40| image:: ../_static/image40.png
+.. |image41| image:: ../_static/image41.png
+.. |image42| image:: ../_static/image42.png
 
