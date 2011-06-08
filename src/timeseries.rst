@@ -1054,39 +1054,88 @@ calculate the time series of first differences, and plot it, we type:
 
 The time series of first differences appears to be stationary in mean and variance, and so
 an ARIMA(p,1,q) model is probably appropriate for the time series of the age of death of the kings of England.
+By taking the time series of first differences, we have removed the trend component of the time
+series of the ages at death of the kings, and are left with an irregular component. 
+We can now examine whether there are correlations between successive terms of this irregular 
+component; if so, this could help us to make a predictive model for the ages at death of the kings.
 
 Selecting an ARIMA Model
 ^^^^^^^^^^^^^^^^^^^^^^^^
-
-xxx
 
 If your time series is stationary, or if you have transformed it to a stationary time series
 by differencing d times, the next step is to select the appropriate ARIMA model, which means
 finding the values of most appropriate values of p and q for an ARIMA(p,d,q) model. To do this,
 you usually need to examine the correlogram and partial correlogram of the stationary time series.
+
 To plot a correlogram and partial correlogram, we can use the "acf()" and "pacf()" functions in R,
-respectively.
+respectively. To get the actual values of the autocorrelations and partial autocorrelations, we
+set "plot=FALSE" in the "acf()" and "pacf()" functions.
 
-For example, to plot the correlogram for lags 1-20 of the twice differenced time series of the diameters of
-skirt hems (which we stored in the variable "skirtseriesdiffs2"), we type:
-
-::
-
-    > acf(skirtsseriesdiff2, lag.max=20)
-
-
-We see from the correlogram that the autocorrelation at lag 1 just exceeds the significance bounds,
-and the autocorrelation at lag 5 exceeds the significance bounds, but all other autocorrelations
-between lags 1-20 do not exceed the significance bounds. 
-
-To plot the partial correlogram for lags 1-20 for the twice differenced time series of skirt hem
-diameters, we use the "pacf()" function, by typing:
+For example, to plot the correlogram for lags 1-20 of the once differenced time series of the 
+ages at death of the kings of England, and to get the values of the autocorrelations, we type:
 
 ::
 
-    > pacf(skirtsseriesdiff2, lag.max=20)
+    > acf(kingtimeseriesdiff1, lag.max=20)             # plot a correlogram
+    > acf(kingtimeseriesdiff1, lag.max=20, plot=FALSE) # get the autocorrelation values
+      Autocorrelations of series ‘kingtimeseriesdiff1’, by lag
+         0      1      2      3      4      5      6      7      8      9     10 
+      1.000 -0.360 -0.162 -0.050  0.227 -0.042 -0.181  0.095  0.064 -0.116 -0.071 
+         11     12     13     14     15     16     17     18     19     20 
+      0.206 -0.017 -0.212  0.130  0.114 -0.009 -0.192  0.072  0.113 -0.093 
 
+|image30|
 
+We see from the correlogram that the autocorrelation at lag 1 (-0.360) exceeds the significance bounds,
+but all other autocorrelations between lags 1-20 do not exceed the significance bounds. 
+
+To plot the partial correlogram for lags 1-20 for the once differenced time series of the ages at
+death of the English kings, and get the values of the partial autocorrelations,
+we use the "pacf()" function, by typing:
+
+::
+
+    > pacf(kingtimeseriesdiff1, lag.max=20)             # plot a partial correlogram
+    > pacf(kingtimeseriesdiff1, lag.max=20, plot=FALSE) # get the partial autocorrelation values
+      Partial autocorrelations of series ‘kingtimeseriesdiff1’, by lag
+        1      2      3      4      5      6      7      8      9     10     11 
+      -0.360 -0.335 -0.321  0.005  0.025 -0.144 -0.022 -0.007 -0.143 -0.167  0.065 
+        12     13     14     15     16     17     18     19     20 
+       0.034 -0.161  0.036  0.066  0.081 -0.005 -0.027 -0.006 -0.037 
+
+|image31|
+
+The partial correlogram shows that the partial autocorrelations at lags 1, 2 and 3 exceed
+the significance bounds, are negative, and are slowly decreasing in magnitude with increasing
+lag (lag 1: -0.360, lag 2: -0.335, lag 3:-0.321). The partial autocorrelations tail off to zero after lag 3. 
+
+Since the correlogram is zero after lag 1, and the partial correlogram tails off to zero
+after lag 3, this means that the following ARMA (autoregressive moving average) models
+are possible for the time series of first differences:
+* an ARMA(3,0) model, that is, an autoregressive model of order p=3, since the partial
+  autocorrelogram is zero after lag 3, and the autocorrelogram tails off to zero (although
+  perhaps too abruptly for this model to be appropriate)
+* an ARMA(0,1) model, that is, a moving average model of order q=1, since the autocorrelogram
+  is zero after lag 1 and the partial autocorrelogram tails off to zero
+* an ARMA(p,q) model, that is, a mixed model with p and q greater than 0, since the autocorrelogram
+  and partial correlogram tail off to zero (although the correlogram probably tails off to zero
+  too abruptly for this model to be appropriate)
+
+We use the principle of parsimony to decide which model is best: that is, we assume that the
+model with the fewest parameters is best. The ARMA(3,0) model has 3 parameters, the ARMA(0,1)
+model has 1 parameter, and the ARMA(p,q) model has at least 2 parameters. Therefore, the 
+ARMA(0,1) model is taken as the best model. 
+
+An ARMA(0,1) model is a moving average model of order 1, or MA(1) model. This model can be written as:
+X_t - mu = Z_t - (theta * Z_t-1), where X_t is the stationary time series we are studying (the first
+differenced series of ages at death of English kings), mu is the mean of time series X_t, 
+Z_t is white noise with mean zero and constant variance, and theta is a parameter that can be estimated. 
+A MA(1) model is usually used to model a time series that shows short-term dependencies between successive
+observations.
+
+Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best model for the time series of first differences
+of the ages at death of English kings, then the original time series of the ages of death can be modelled
+using an ARIMA(0,1,1) model (with p=0, d=1, q=1, where d is the order of differencing required). 
 
 Links and Further Reading
 -------------------------
@@ -1157,3 +1206,5 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image27| image:: ../_static/image27.png
 .. |image28| image:: ../_static/image28.png
 .. |image29| image:: ../_static/image29.png
+.. |image30| image:: ../_static/image30.png
+.. |image31| image:: ../_static/image31.png
