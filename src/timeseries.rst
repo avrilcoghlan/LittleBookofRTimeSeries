@@ -568,13 +568,13 @@ interval for the forecast, and a 95% prediction interval for the forecast. For e
 the forecasted rainfall for 1920 is about 24.68 inches, with a 95% prediction interval of
 (16.24, 33.11). 
 
-To plot the predictions made by forecast.HoltWinters(), we can use the "plot()" function:
+To plot the predictions made by forecast.HoltWinters(), we can use the "plot.forecast()" function:
 
 .. highlight:: r
 
 ::
 
-    > plot(rainseriesforecasts2) 
+    > plot.forecast(rainseriesforecasts2) 
 
 |image12|
 
@@ -788,7 +788,7 @@ for 1912 to 1930 (19 more data points), and plot them, by typing:
 ::
 
     > skirtsseriesforecasts2 <- forecast.HoltWinters(skirtsseriesforecasts, h=19)
-    > plot(skirtsseriesforecasts2) 
+    > plot.forecast(skirtsseriesforecasts2) 
 
 |image16|
 
@@ -927,7 +927,7 @@ forecasts for January 1994 to December 1998 (48 more months), and plot the forec
 ::
 
     > souvenirtimeseriesforecasts2 <- forecast.HoltWinters(souvenirtimeseriesforecasts, h=48)
-    > plot(souvenirtimeseriesforecasts2)
+    > plot.forecast(souvenirtimeseriesforecasts2)
 
 |image23|
 
@@ -1059,8 +1059,8 @@ series of the ages at death of the kings, and are left with an irregular compone
 We can now examine whether there are correlations between successive terms of this irregular 
 component; if so, this could help us to make a predictive model for the ages at death of the kings.
 
-Selecting an ARIMA Model
-^^^^^^^^^^^^^^^^^^^^^^^^
+Selecting a Candidate ARIMA Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If your time series is stationary, or if you have transformed it to a stationary time series
 by differencing d times, the next step is to select the appropriate ARIMA model, which means
@@ -1115,6 +1115,7 @@ lag (lag 1: -0.360, lag 2: -0.335, lag 3:-0.321). The partial autocorrelations t
 Since the correlogram is zero after lag 1, and the partial correlogram tails off to zero
 after lag 3, this means that the following ARMA (autoregressive moving average) models
 are possible for the time series of first differences:
+
 * an ARMA(3,0) model, that is, an autoregressive model of order p=3, since the partial
   autocorrelogram is zero after lag 3, and the autocorrelogram tails off to zero (although
   perhaps too abruptly for this model to be appropriate)
@@ -1223,6 +1224,7 @@ autocorrelations tail off to zero after lag 2.
 
 Since the correlogram tails off to zero after lag 3, and the partial correlogram is        
 zero after lag 2, the following ARMA models are possible for the time series:
+
 * an ARMA(2,0) model, since the partial autocorrelogram is zero after lag 2, and
   the correlogram tails off to zero after lag 3, and the partial correlogram
   is zero after lag 2
@@ -1252,6 +1254,130 @@ If an ARMA(2,0) model (with p=2, q=0) is used to model the time series of volcan
 it would mean that an ARIMA(2,0,0) model can be used (with p=2, d=0, q=0, where d is the order of
 differencing required). Similarly, if an ARMA(p,q) mixed model is used, where p and q are both greater
 than zero, than an ARIMA(p,0,q) model can be used.
+
+Forecasting Using an ARIMA Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Once you have selected the best candidate ARIMA(p,d,q) model for your time series data, you can estimate
+the parameters of that ARIMA model, and use that as a predictive model for making forecasts for future
+values of your time series. 
+
+You can estimate the parameters of an ARIMA(p,d,q) model using the "arima()" function in R.
+
+Example of the Ages at Death of the Kings of England
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+For example, we discussed above that an ARIMA(0,1,1) model seems a plausible model for the ages at
+deaths of the kings of England. You can specify the values of p, d and q in the ARIMA model by
+using the "order" argument of the "arima()" function in R. To fit an ARIMA(p,d,q) model to this time series (which we stored
+in the variable "kingstimeseries", see above), we type:
+
+.. highlight:: r
+
+::
+
+    > kingstimeseriesarima <- arima(kingstimeseries, order=c(0,1,1)) # fit an ARIMA(0,1,1) model
+    > kingstimeseriesarima
+      ARIMA(0,1,1)                    
+      Coefficients:
+              ma1
+            -0.7218
+      s.e.   0.1208
+      sigma^2 estimated as 230.4:  log likelihood = -170.06
+      AIC = 344.13   AICc = 344.44   BIC = 347.56
+
+As mentioned above, if we are fitting an ARIMA(0,1,1) model to our time series, it means we are
+fitting an an ARMA(0,1) model to the time series of first differences. An ARMA(0,1) model can
+be written X_t - mu = Z_t - (theta * Z_t-1), where theta is a parameter to be estimated. From
+the output of the "arima()" R function (above), the estimated value of theta (given as 'ma1' in the
+R output) is -0.7218 in the case of the ARIMA(0,1,1) model fitted to the time series of ages at
+death of kings.
+
+We can then use the ARIMA model to make forecasts for future values of the time series, using the
+"forecast.Arima()" function in the "forecast" R package. For example, to forecast the ages at death
+of the next ten English kings, we type:
+
+.. highlight:: r
+
+::
+
+    > library("forecast") # load the "forecast" R library
+    > kingstimeseriesforecasts <- forecast.Arima(kingstimeseriesarima, h=5)
+    > kingstimeseriesforecasts 
+         Point Forecast    Lo 80    Hi 80    Lo 95     Hi 95
+      43       67.75063 48.29647 87.20479 37.99806  97.50319
+      44       67.75063 47.55748 87.94377 36.86788  98.63338
+      45       67.75063 46.84460 88.65665 35.77762  99.72363
+      46       67.75063 46.15524 89.34601 34.72333 100.77792
+      47       67.75063 45.48722 90.01404 33.70168 101.79958
+
+The original time series for the English kings includes the ages at death of 42 English kings.
+The forecast.Arima() function gives us a forecast of the age of death of the next five English
+kings (kings 43-47), as well as 80% and 95% prediction intervals for those predictions.
+The age of death of the 42nd English king was 56 years (the last observed value in our time series),
+and the ARIMA model gives the forecasted age at death of the next five kings as 67.8 years.
+
+We can plot the observed ages of death for the first 42 kings, as well as the ages that would be 
+predicted for these 42 kings and for the next 5 kings using our ARIMA(0,1,1) model, by typing:
+
+.. highlight:: r
+
+::
+
+    > plot.forecast(kingstimeseriesforecasts)
+
+|image35|
+
+As in the case of exponential smoothing models, it is a good idea to investigate whether the
+forecast errors of an ARIMA model are normally distributed with mean zero and constant variance, and
+whether the are correlations between successive forecast errors. 
+
+For example, we can make a correlogram of the forecast errors for our ARIMA(0,1,1) model for the
+ages at death of kings, and perform the Ljung-Box test for lags 1-20, by typing:
+
+.. highlight:: r
+
+::
+
+    > acf(kingstimeseriesforecasts$residuals, lag.max=20)
+    > Box.test(kingstimeseriesforecasts$residuals, lag=20, type="Ljung-Box")
+      Box-Ljung test
+      data:  kingstimeseriesforecasts$residuals 
+      X-squared = 13.5844, df = 20, p-value = 0.851
+
+|image36|
+
+Since the correlogram shows that none of the sample autocorrelations for lags 1-20 exceed the
+significance bounds, and the p-value for the Ljung-Box test is 0.9, we can conclude that there
+is very little evidence for non-zero autocorrelations in the forecast errors at lags 1-20.
+
+To investigate whether the forecast errors are normally distributed with mean zero and constant
+variance, we can make a time plot and histogram (with overlaid normal curve) of the forecast errors:
+
+.. highlight:: r
+
+::
+
+    > plot.ts(kingstimeseriesforecasts$residuals)            # make a time plot of the forecast errors
+    > plotForecastErrors(kingstimeseriesforecasts$residuals) # make a histogram (with overlaid normal curve)
+
+|image37|
+
+|image38|
+
+The time plot of the in-sample forecast errors shows that the variance of the forecast errors
+seems to be roughly constant over time (though perhaps there is slightly higher variance for the
+second half of the time series). The histogram of the time series shows that the forecast errors
+are roughly normally distributed and the mean seems to be close to zero. Therefore, it is plausible
+that the forecast errors are normally distributed with mean zero and constant variance.
+
+Since successive forecast errors do not seem to be correlated, and the forecast errors seem to
+be normally distributed with mean zero and constant variance, the ARIMA(0,1,1) does seem to
+provide an adequate predictive model for the ages at death of English kings.
+
+Example of the Volcanic Dust Veil in the Northern Hemisphere
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 Links and Further Reading
 -------------------------
@@ -1327,4 +1453,8 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image32| image:: ../_static/image32.png
 .. |image33| image:: ../_static/image33.png
 .. |image34| image:: ../_static/image34.png
+.. |image35| image:: ../_static/image35.png
+.. |image36| image:: ../_static/image36.png
+.. |image37| image:: ../_static/image37.png
+.. |image38| image:: ../_static/image38.png
 
