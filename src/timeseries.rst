@@ -1071,6 +1071,9 @@ To plot a correlogram and partial correlogram, we can use the "acf()" and "pacf(
 respectively. To get the actual values of the autocorrelations and partial autocorrelations, we
 set "plot=FALSE" in the "acf()" and "pacf()" functions.
 
+Example of the Ages at Death of the Kings of England
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 For example, to plot the correlogram for lags 1-20 of the once differenced time series of the 
 ages at death of the kings of England, and to get the values of the autocorrelations, we type:
 
@@ -1078,7 +1081,7 @@ ages at death of the kings of England, and to get the values of the autocorrelat
 
     > acf(kingtimeseriesdiff1, lag.max=20)             # plot a correlogram
     > acf(kingtimeseriesdiff1, lag.max=20, plot=FALSE) # get the autocorrelation values
-      Autocorrelations of series ‘kingtimeseriesdiff1’, by lag
+      Autocorrelations of series 'kingtimeseriesdiff1', by lag
          0      1      2      3      4      5      6      7      8      9     10 
       1.000 -0.360 -0.162 -0.050  0.227 -0.042 -0.181  0.095  0.064 -0.116 -0.071 
          11     12     13     14     15     16     17     18     19     20 
@@ -1097,7 +1100,7 @@ we use the "pacf()" function, by typing:
 
     > pacf(kingtimeseriesdiff1, lag.max=20)             # plot a partial correlogram
     > pacf(kingtimeseriesdiff1, lag.max=20, plot=FALSE) # get the partial autocorrelation values
-      Partial autocorrelations of series ‘kingtimeseriesdiff1’, by lag
+      Partial autocorrelations of series 'kingtimeseriesdiff1', by lag
         1      2      3      4      5      6      7      8      9     10     11 
       -0.360 -0.335 -0.321  0.005  0.025 -0.144 -0.022 -0.007 -0.143 -0.167  0.065 
         12     13     14     15     16     17     18     19     20 
@@ -1130,12 +1133,125 @@ An ARMA(0,1) model is a moving average model of order 1, or MA(1) model. This mo
 X_t - mu = Z_t - (theta * Z_t-1), where X_t is the stationary time series we are studying (the first
 differenced series of ages at death of English kings), mu is the mean of time series X_t, 
 Z_t is white noise with mean zero and constant variance, and theta is a parameter that can be estimated. 
-A MA(1) model is usually used to model a time series that shows short-term dependencies between successive
-observations.
 
-Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best model for the time series of first differences
+A MA (moving average) model is usually used to model a time series that shows short-term dependencies between successive
+observations. Intuitively, it makes good sense that a MA model can be used to describe the irregular
+component in the time series of ages at death of English kings, as we might expect the age at death of
+a particular English king to have some effect on the ages at death of the next king or two, but not
+much effect on the ages at death of kings that reign much longer after that. 
+
+Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best candidate model for the time series of first differences
 of the ages at death of English kings, then the original time series of the ages of death can be modelled
 using an ARIMA(0,1,1) model (with p=0, d=1, q=1, where d is the order of differencing required). 
+
+Example of the Volcanic Dust Veil in the Northern Hemisphere
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Let's take another example of selecting an appropriate ARIMA model. The file 
+file `http://robjhyndman.com/tsdldata/annual/dvi.dat 
+<http://robjhyndman.com/tsdldata/annual/dvi.dat>`_ contains data on 
+the volcanic dust veil index in the northern hemisphere, from 1500-1969 (original
+data from Hipel and Mcleod, 1994). This is a measure of the impact of volcanic
+eruptions' release of dust and aerosols into the environment. 
+We can read it into R and make a time plot by typing:
+
+.. highlight:: r
+
+::
+
+    > volcanodust <- scan("http://robjhyndman.com/tsdldata/annual/dvi.dat", skip=1)
+      Read 470 items
+    > volcanodustseries <- ts(volcanodust,start=c(1500))
+    > plot.ts(volcanodustseries)
+
+|image32|
+
+From the time plot, it appears that the random fluctuations in the time series are roughly
+constant in size over time, so an additive model is probably appropriate for describing this
+time series. 
+
+Furthermore, the time series appears to be stationary in mean and variance, as
+its level and variance appear to be roughly constant over time. Therefore, we do not need
+to difference this series in order to fit an ARIMA model, but can fit an ARIMA model to
+the original series (the order of differencing required, d, is zero here).
+
+We can now plot a correlogram and partial correlogram for lags 1-20 to investigate what ARIMA model to use:
+
+.. highlight:: r
+
+::
+
+    > acf(volcanodustseries, lag.max=20)             # plot a correlogram
+    > acf(volcanodustseries, lag.max=20, plot=FALSE) # get the values of the autocorrelations
+      Autocorrelations of series 'volcanodustseries', by lag
+        0      1      2      3      4      5      6      7      8      9     10 
+      1.000  0.666  0.374  0.162  0.046  0.017 -0.007  0.016  0.021  0.006  0.010 
+        11     12     13     14     15     16     17     18     19     20 
+      0.004  0.024  0.075  0.082  0.064  0.039  0.005  0.028  0.108  0.182 
+
+|image33|
+
+We see from the correlogram that the autocorrelations for lags 1, 2 and 3 exceed
+the significance bounds, and that the autocorrelations tail off to zero after lag 3.
+The autocorrelations for lags 1, 2, 3 are positive, and decrease in magnitude with
+increasing lag (lag 1: 0.666, lag 2: 0.374, lag 3: 0.162). 
+
+The autocorrelation for
+lags 19 and 20 exceed the significance bounds too, but it is likely that this is due
+to chance, since they just exceed the significance bounds (especially for lag 19), the
+autocorrelations for lags 4-18 do not exceed the signifiance bounds, and 
+we would expect 1 in 20 lags to exceed the 95% significance bounds by chance alone.
+
+.. highlight:: r
+
+::
+
+    > pacf(volcanodustseries, lag.max=20) 
+    > pacf(volcanodustseries, lag.max=20, plot=FALSE)
+      Partial autocorrelations of series 'volcanodustseries', by lag
+        1      2      3      4      5      6      7      8      9     10     11 
+      0.666 -0.126 -0.064 -0.005  0.040 -0.039  0.058 -0.016 -0.025  0.028 -0.008 
+        12     13     14     15     16     17     18     19     20 
+      0.036  0.082 -0.025 -0.014  0.008 -0.025  0.073  0.131  0.063 
+
+|image34|
+
+From the partial autocorrelogram, we see that the partial autocorrelation at lag 1
+is positive and exceeds the significance bounds (0.666), while the partial autocorrelation
+at lag 2 is negative and also exceeds the significance bounds (-0.126). The partial
+autocorrelations tail off to zero after lag 2. 
+
+Since the correlogram tails off to zero after lag 3, and the partial correlogram is        
+zero after lag 2, the following ARMA models are possible for the time series:
+* an ARMA(2,0) model, since the partial autocorrelogram is zero after lag 2, and
+  the correlogram tails off to zero after lag 3, and the partial correlogram
+  is zero after lag 2
+* an ARMA(0,3) model, since the autocorrelogram is zero after lag 3, and the partial
+  correlogram tails off to zero (although perhaps too abruptly for this model to be
+  appropriate)
+* an ARMA(p,q) mixed model, since the correlogram and partial correlogram tail off
+  to zero (although the partial correlogram perhaps tails off too abruptly for this
+  model to be appropriate)
+
+The ARMA(2,0) model has 2 parameters, the ARMA(0,3) model has 3 parameters, and the ARMA(p,q)
+model has at least 2 parameters. Therefore, using the principle of parsimony, the ARMA(2,0)
+model and ARMA(p,q) model are equally good candidate models.
+
+An ARMA(2,0) model is an autoregressive model of order 2, or AR(2) model. This model can be
+written as: X_t - mu = (Beta1 * (X_t-1 - mu)) + (Beta2 * (Xt-2 - mu)) + Z_t,
+where X_t is the stationary time series we are studying (the time series of volcanic dust veil index),
+mu is the mean of time series X_t, Beta1 and Beta2 are parameters to be estimaetd, and Z_t is white noise with mean
+zero and constant variance.
+
+An AR (autoregressive) model is usually used to model a time series which shows longer term dependencies between
+successive observations. Intuitively, it makes sense that an AR model could be used to describe the
+time series of volcanic dust veil index, as we would expect volcanic dust and aerosol levels in one year
+to affect those in much later years, since the dust and aerosols are unlikely to disappear quickly.
+
+If an ARMA(2,0) model (with p=2, q=0) is used to model the time series of volcanic dust veil index,
+it would mean that an ARIMA(2,0,0) model can be used (with p=2, d=0, q=0, where d is the order of
+differencing required). Similarly, if an ARMA(p,q) mixed model is used, where p and q are both greater
+than zero, than an ARIMA(p,0,q) model can be used.
 
 Links and Further Reading
 -------------------------
@@ -1208,3 +1324,7 @@ The content in this book is licensed under a `Creative Commons Attribution 3.0 L
 .. |image29| image:: ../_static/image29.png
 .. |image30| image:: ../_static/image30.png
 .. |image31| image:: ../_static/image31.png
+.. |image32| image:: ../_static/image32.png
+.. |image33| image:: ../_static/image33.png
+.. |image34| image:: ../_static/image34.png
+
