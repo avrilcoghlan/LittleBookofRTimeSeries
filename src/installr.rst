@@ -556,10 +556,7 @@ available on the "Introduction to R" website,
 Acknowledgements
 ----------------
 
-Thank you to Noel O'Boyle for helping in using Sphinx, `http://sphinx.pocoo.org <http://sphinx.pocoo.org>`_, to create
-this document, and github, `https://github.com/ <https://github.com/>`_, to store different versions of the document
-as I was writing it, and readthedocs, `http://readthedocs.org/ <http://readthedocs.org/>`_, to build and distribute
-this document.
+For very helpful comments and suggestions for improvements on the installation instructions, thank you very much to Friedrich Leisch and Phil Spector.
 
 Contact
 -------

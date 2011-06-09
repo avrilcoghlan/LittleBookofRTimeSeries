@@ -1546,11 +1546,6 @@ Acknowledgements
 I am grateful to `Professor Rob Hyndman <http://robjhyndman.com/>`_, for kindly allowing me to use the time series data sets
 from his `Time Series Data Library (TSDL) <http://robjhyndman.com/TSDL/>`_ in the examples in this booklet. 
 
-Thank you to Noel O'Boyle for helping in using Sphinx, `http://sphinx.pocoo.org <http://sphinx.pocoo.org>`_, to create
-this document, and github, `https://github.com/ <https://github.com/>`_, to store different versions of the document
-as I was writing it, and readthedocs, `http://readthedocs.org/ <http://readthedocs.org/>`_, to build and distribute
-this document.
-
 Many of the examples in this booklet are inspired by examples in the excellent Open University book,
 "Time series" (product code M249/02), available from `the Open University Shop <http://www.ouw.co.uk/store/>`_.
 
