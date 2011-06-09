@@ -23,6 +23,11 @@ available by Rob Hyndman in his Time Series Data Library at
 There is a pdf version of this booklet available at
 `https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf>`_.
 
+If you like this booklet, you may also like to check out my booklet on using
+R for biomedical statistics, 
+`http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/
+<http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/>`_.
+
 Reading Time Series Data
 ------------------------
 
