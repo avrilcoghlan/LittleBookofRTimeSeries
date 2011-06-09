@@ -10,16 +10,22 @@ R (`www.r-project.org <http://www.r-project.org/>`_) is a commonly used
 free Statistics software. R allows you to carry out statistical
 analyses in an interactive mode, as well as allowing simple programming.
 
-How to check if R is installed on a Windows PC
-----------------------------------------------
+Installing R
+------------
 
 To use R, you first need to install the R program on your computer.
 
-These instructions are for installing R on a Windows PC.
+How to check if R is installed on a Windows PC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Before you install R on your computer, the first thing to do is to check whether
 R is already installed on your computer (for example, by a previous user). 
-There are two ways you can do this:
+
+These instructions will focus on installing R on a Windows PC. However, I will also
+briefly mention how to install R on a Macintosh or Linux computer (see below).
+
+If you are using a Windows PC, there are two ways you can check whether R is
+already isntalled on your computer:
 
 1. Check if there is an "R" icon on the desktop of the computer that you are using.
    If so, double-click on the "R" icon to start R. If you cannot find an "R" icon, try step 2 instead.
@@ -36,7 +42,7 @@ it is worth installing the latest version of R, to make sure that you have all t
 latest R functions available to you to use.
 
 Finding out what is the latest version of R
--------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To find out what is the latest version of R, you can look at the CRAN (Comprehensive
 R Network) website, `http://cran.r-project.org/ <http://cran.r-project.org/>`_.
@@ -51,7 +57,7 @@ that you have a recent version of R (to ensure compatibility with all the latest
 the R packages that you have downloaded). 
 
 Installing R on a Windows PC
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To install R on your Windows computer, follow these steps:
 
@@ -87,7 +93,7 @@ To install R on your Windows computer, follow these steps:
 |image3|
 
 How to install R on non-Windows computers (eg. Macintosh or Linux computers)
-----------------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The instructions above are for installing R on a Windows PC. If you want to install R 
 on a computer that has a non-Windows operating system (for example, a Macintosh or computer running Linux,
@@ -98,13 +104,16 @@ follow the R installation instructions for the appropriate operating system at
 `http://ftp.heanet.ie/mirrors/cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed_003f 
 <http://ftp.heanet.ie/mirrors/cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed_003f>`_).
 
-How to install an R package
----------------------------
+Installing R packages
+---------------------
 
 R comes with some standard packages that are installed when you install R. However, in this 
 booklet I will also tell you how to use some additional R packages that are useful, for example,
 the "rmeta" package. These additional packages do not come with the standard installation of R,
 so you need to install them yourself.
+
+How to install an R package
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have installed R on a Windows computer (following the steps above), you can install 
 an additional package by following the steps below:
@@ -139,7 +148,7 @@ These Bioconductor packages need to be installed using a different, Bioconductor
 (see `How to install a Bioconductor R package`_ below).
 
 How to install a Bioconductor R package
----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The procedure above can be used to install the majority of R packages. However, the
 Bioconductor set of bioinformatics R packages need to be installed by a special procedure.
@@ -147,9 +156,7 @@ Bioconductor (`www.bioconductor.org <http://www.bioconductor.org/>`_)
 is a group of R packages that have been developed for bioinformatics. This includes 
 R packages such as "yeastExpData", "Biostrings", etc.
 
-
 To install the Bioconductor packages, follow these steps:
-
 
 1. To start R, follow either step 2 or 3:
 2. Check if there is an "R" icon on the desktop of the computer that you are using.
