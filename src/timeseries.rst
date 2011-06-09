@@ -666,7 +666,8 @@ the distribution of forecast errors. To do this, we can define an R function "pl
          mymin  <- min(forecasterrors)*3      
          mymax  <- max(forecasterrors)*3     
          mybins <- seq(mymin, mymax, mybinsize)
-         hist(forecasterrors, col="red", freq=FALSE, breaks=mybins) # freq=FALSE ensures the area under the histogram = 1
+         hist(forecasterrors, col="red", freq=FALSE, breaks=mybins) 
+         # freq=FALSE ensures the area under the histogram = 1
          mysd   <- sd(forecasterrors)
          # generate normally distributed data with mean 0 and standard deviation mysd
          mynorm <- rnorm(10000, mean=0, sd=mysd)
@@ -831,7 +832,7 @@ normal curve:
 ::
 
     > plot.ts(skirtsseriesforecasts2$residuals)            # make a time plot
-    > plotForecastErrors(skirtsseriesforecasts2$residuals) # make a histogram with overlaid normal curve
+    > plotForecastErrors(skirtsseriesforecasts2$residuals) # make a histogram 
 
 |image20|
 
@@ -967,7 +968,7 @@ with mean zero, by making a time plot of the forecast errors and a histogram (wi
 ::
 
     > plot.ts(souvenirtimeseriesforecasts2$residuals)            # make a time plot
-    > plotForecastErrors(souvenirtimeseriesforecasts2$residuals) # make a histogram with overlaid normal curve
+    > plotForecastErrors(souvenirtimeseriesforecasts2$residuals) # make a histogram 
 
 |image25|
 |image26|
@@ -1363,8 +1364,8 @@ variance, we can make a time plot and histogram (with overlaid normal curve) of 
 
 ::
 
-    > plot.ts(kingstimeseriesforecasts$residuals)            # make a time plot of the forecast errors
-    > plotForecastErrors(kingstimeseriesforecasts$residuals) # make a histogram (with overlaid normal curve)
+    > plot.ts(kingstimeseriesforecasts$residuals)            # make time plot of forecast errors
+    > plotForecastErrors(kingstimeseriesforecasts$residuals) # make a histogram
 
 |image37|
 
@@ -1495,8 +1496,8 @@ variance, we make a time plot of the forecast errors, and a histogram:
 
 ::
 
-    > plot.ts(volcanodustseriesforecasts$residuals)            # make a time plot of the forecast errors
-    > plotForecastErrors(volcanodustseriesforecasts$residuals) # make a histogram (with overlaid normal curve)
+    > plot.ts(volcanodustseriesforecasts$residuals)            # make time plot of forecast errors
+    > plotForecastErrors(volcanodustseriesforecasts$residuals) # make a histogram 
 
 |image41|
 
