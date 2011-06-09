@@ -18,7 +18,7 @@ R for biomedical statistics,
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    src/installr.rst
    src/timeseries.rst
