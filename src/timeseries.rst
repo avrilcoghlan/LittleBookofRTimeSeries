@@ -26,7 +26,11 @@ There is a pdf version of this booklet available at
 If you like this booklet, you may also like to check out my booklet on using
 R for biomedical statistics, 
 `http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/
-<http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/>`_.
+<http://a-little-book-of-r-for-biomedical-statistics.readthedocs.org/>`_,
+and
+my booklet on using R for multivariate analysis,
+`http://little-book-of-r-for-multivariate-analysis.readthedocs.org/
+<http://little-book-of-r-for-multivariate-analysis.readthedocs.org/>`_.
 
 Reading Time Series Data
 ------------------------
