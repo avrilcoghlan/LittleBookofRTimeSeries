@@ -1161,8 +1161,7 @@ much effect on the ages at death of kings that reign much longer after that.
    The auto.arima() function can be
    used to find the appropriate ARIMA model, eg., type "library(forecast)",
    then "auto.arima(kings)". The output says an 
-   appropriate model is ARIMA(0,1,1). Different criteria
-   can be used to select the best model (see the auto.arima() help page). 
+   appropriate model is ARIMA(0,1,1). 
 
 Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best candidate model for the time series of first differences
 of the ages at death of English kings, then the original time series of the ages of death can be modelled
@@ -1257,6 +1256,14 @@ zero after lag 2, the following ARMA models are possible for the time series:
 * an ARMA(p,q) mixed model, since the correlogram and partial correlogram tail off
   to zero (although the partial correlogram perhaps tails off too abruptly for this
   model to be appropriate)
+
+.. sidebar:: Shortcut: the auto.arima() function
+
+   Again, we can use auto.arima() to find an appropriate model, by typing
+   "auto.arima(volcanodust)", which gives us ARIMA(1,0,2), which has 3 parameters.
+   However, different criteria can be used to select a model (see auto.arima()
+   help page). If we use the "bic" criterion, which penalises the number of 
+   parameters, we get ARIMA(2,0,0), which is ARMA(2,0): "auto.arima(volcanodust,ic="bic")". 
 
 The ARMA(2,0) model has 2 parameters, the ARMA(0,3) model has 3 parameters, and the ARMA(p,q)
 model has at least 2 parameters. Therefore, using the principle of parsimony, the ARMA(2,0)
