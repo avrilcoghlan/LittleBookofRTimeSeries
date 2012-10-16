@@ -21,7 +21,7 @@ available by Rob Hyndman in his Time Series Data Library at
 `http://robjhyndman.com/TSDL/ <http://robjhyndman.com/TSDL/>`_. 
 
 There is a pdf version of this booklet available at
-`https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf>`_.
+`https://media.readthedocs.org/pdf/a-little-book-of-r-for-time-series/latest/a-little-book-of-r-for-time-series.pdf <https://media.readthedocs.org/pdf/a-little-book-of-r-for-time-series/latest/a-little-book-of-r-for-time-series.pdf>`_.
 
 If you like this booklet, you may also like to check out my booklet on using
 R for biomedical statistics, 
@@ -1586,7 +1586,7 @@ Many of the examples in this booklet are inspired by examples in the excellent O
 "Time series" (product code M249/02), available from `the Open University Shop <http://www.ouw.co.uk/store/>`_.
 
 Thank you to Ravi Aranke for bringing auto.arima() to my attention, and Maurice Omane-Adjepong for bringing
-unit root tests to my attention. Thank you for other comments to Antoine Binard.
+unit root tests to my attention. Thank you for other comments to Antoine Binard and Bill Johnston.
 
 Contact
 -------
