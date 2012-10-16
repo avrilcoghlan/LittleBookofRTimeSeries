@@ -1323,9 +1323,15 @@ the output of the "arima()" R function (above), the estimated value of theta (gi
 R output) is -0.7218 in the case of the ARIMA(0,1,1) model fitted to the time series of ages at
 death of kings.
 
+.. sidebar:: Specifying the confidence level for prediction intervals
+
+   You can specify the confidence level for prediction intervals in forecast.Arima()
+   by using the "level" argument. For example, to get a 99.5% prediction interval, we 
+   would type "forecast.Arima(kingstimeseriesarima, h=5, level=c(99.5))".
+
 We can then use the ARIMA model to make forecasts for future values of the time series, using the
 "forecast.Arima()" function in the "forecast" R package. For example, to forecast the ages at death
-of the next ten English kings, we type:
+of the next five English kings, we type:
 
 .. highlight:: r
 
