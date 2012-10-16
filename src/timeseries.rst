@@ -1265,7 +1265,7 @@ zero and constant variance.
 An AR (autoregressive) model is usually used to model a time series which shows longer term dependencies between
 successive observations. Intuitively, it makes sense that an AR model could be used to describe the
 time series of volcanic dust veil index, as we would expect volcanic dust and aerosol levels in one year
-to affect those in much later years, since the dust and aerosols are unlikely to disappear quickly.
+to affect those in much later years, since the dust and aerosols are unlikely to disappear quickly.   
 
 If an ARMA(2,0) model (with p=2, q=0) is used to model the time series of volcanic dust veil index,
 it would mean that an ARIMA(2,0,0) model can be used (with p=2, d=0, q=0, where d is the order of
