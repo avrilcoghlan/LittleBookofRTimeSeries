@@ -1153,10 +1153,10 @@ much effect on the ages at death of kings that reign much longer after that.
 
 .. sidebar:: Shortcut: the auto.arima() function
 
-   The auto.arima() function in the "forecast" package can be
-   used to find the appropriate ARIMA model. In this case, type "library(forecast)"
-   and then "auto.arima(kings)". The output will tell you that an 
-   appropriate ARIMA model is an ARIMA(0,1,1) model.
+   The auto.arima() function can be
+   used to find the appropriate ARIMA model, eg., type "library(forecast)",
+   then "auto.arima(kings)". The output says an 
+   appropriate model is ARIMA(0,1,1).      
 
 Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best candidate model for the time series of first differences
 of the ages at death of English kings, then the original time series of the ages of death can be modelled
