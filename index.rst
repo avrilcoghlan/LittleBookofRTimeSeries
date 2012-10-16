@@ -7,8 +7,8 @@ Email: alc@sanger.ac.uk
 
 This is a simple introduction to time series analysis using the R statistics software.
 
-There is a pdf version of this booklet available at:
-`https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf <https://github.com/avrilcoghlan/LittleBookofRTimeSeries/raw/master/_build/latex/TimeSeries.pdf>`_.
+There is a pdf version of this booklet available at
+`https://media.readthedocs.org/pdf/a-little-book-of-r-for-time-series/latest/a-little-book-of-r-for-time-series.pdf <https://media.readthedocs.org/pdf/a-little-book-of-r-for-time-series/latest/a-little-book-of-r-for-time-series.pdf>`_.
 
 If you like this booklet, you may also like to check out my booklet on using
 R for biomedical statistics, 
