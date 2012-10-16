@@ -1155,6 +1155,15 @@ Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best candidate model
 of the ages at death of English kings, then the original time series of the ages of death can be modelled
 using an ARIMA(0,1,1) model (with p=0, d=1, q=1, where d is the order of differencing required). 
 
+.. sidebar:: Shortcut: the auto.arima() function
+
+   The auto.arima() function in the "forecast" package can
+   be used as a shortcut to find the appropriate ARIMA model.
+   In this case, you just type "library(forecast)" and then
+   "auto.arima(kings)". The output will tell you that an 
+   appropriate ARIMA model is an ARIMA(0,1,1) model, in agreement
+   with what we found before.
+
 Example of the Volcanic Dust Veil in the Northern Hemisphere
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
