@@ -1579,7 +1579,8 @@ from his `Time Series Data Library (TSDL) <http://robjhyndman.com/TSDL/>`_ in th
 Many of the examples in this booklet are inspired by examples in the excellent Open University book,
 "Time series" (product code M249/02), available from `the Open University Shop <http://www.ouw.co.uk/store/>`_.
 
-Thank you to Ravi Aranke for bringing auto.arima() to my attention.
+Thank you to Ravi Aranke for bringing auto.arima() to my attention, and Maurice Omane-Adjepong for bringing
+unit root tests to my attention.
 
 Contact
 -------
