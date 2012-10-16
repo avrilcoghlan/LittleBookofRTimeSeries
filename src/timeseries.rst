@@ -1586,7 +1586,7 @@ Many of the examples in this booklet are inspired by examples in the excellent O
 "Time series" (product code M249/02), available from `the Open University Shop <http://www.ouw.co.uk/store/>`_.
 
 Thank you to Ravi Aranke for bringing auto.arima() to my attention, and Maurice Omane-Adjepong for bringing
-unit root tests to my attention.
+unit root tests to my attention. Thank you for other comments to Antoine Binard.
 
 Contact
 -------
