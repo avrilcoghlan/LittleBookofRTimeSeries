@@ -1036,6 +1036,11 @@ Therefore, we can difference the time series twice, to see if that gives us a st
 
 |image28| 
 
+.. sidebar:: Formal tests for stationarity      
+
+   Formal tests for stationarity called "unit root tests" are available in the
+   fUnitRoots package, available on CRAN, but will not be discussed here.
+
 The time series of second differences (above) does appear to be stationary in mean and variance,
 as the level of the series stays roughly constant over time, and the variance of the series appears
 roughly constant over time. Thus, it appears that we need to difference the time series of the diameter of skirts
@@ -1156,7 +1161,8 @@ much effect on the ages at death of kings that reign much longer after that.
    The auto.arima() function can be
    used to find the appropriate ARIMA model, eg., type "library(forecast)",
    then "auto.arima(kings)". The output says an 
-   appropriate model is ARIMA(0,1,1).      
+   appropriate model is ARIMA(0,1,1). Different criteria
+   can be used to select the best model (see the auto.arima() help page). 
 
 Since an ARMA(0,1) model (with p=0, q=1) is taken to be the best candidate model for the time series of first differences
 of the ages at death of English kings, then the original time series of the ages of death can be modelled
@@ -1565,6 +1571,8 @@ from his `Time Series Data Library (TSDL) <http://robjhyndman.com/TSDL/>`_ in th
 
 Many of the examples in this booklet are inspired by examples in the excellent Open University book,
 "Time series" (product code M249/02), available from `the Open University Shop <http://www.ouw.co.uk/store/>`_.
+
+Thank you to Ravi Aranke for bringing auto.arima() to my attention.
 
 Contact
 -------
