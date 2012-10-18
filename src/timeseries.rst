@@ -1565,6 +1565,9 @@ There is another nice (slightly more in-depth) tutorial to R
 available on the "Introduction to R" website,
 `cran.r-project.org/doc/manuals/R-intro.html <http://cran.r-project.org/doc/manuals/R-intro.html>`_.
 
+You can find a list of R packages for analysing time series data on the
+`CRAN Time Series Task View <http://cran.r-project.org/web/views/TimeSeries.html>`_.
+
 To learn about time series analysis, I would highly recommend the book "Time 
 series" (product code M249/02) by the Open University, available from `the Open University Shop
 <http://www.ouw.co.uk/store/>`_.
