@@ -1534,9 +1534,9 @@ variance, we make a time plot of the forecast errors, and a histogram:
 |image42|
 
 The time plot of forecast errors shows that the forecast errors seem to have roughly
-constant variance over time. However, the time series of forecast errors seems to have
- a negative mean, rather than a zero mean. We can confirm this by calculating the mean
- forecast error, which turns out to be about -0.22:
+constant variance over time. However, the time series of forecast errors seems to have a 
+negative mean, rather than a zero mean. We can confirm this by calculating the mean
+forecast error, which turns out to be about -0.22:
 
 .. highlight:: r
 
