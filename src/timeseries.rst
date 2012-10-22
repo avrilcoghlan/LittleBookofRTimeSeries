@@ -667,12 +667,12 @@ the distribution of forecast errors. To do this, we can define an R function "pl
       {
          # make a red histogram of the forecast errors: 
          mybinsize <- IQR(forecasterrors)/4
-         mymin  <- min(forecasterrors)*3      
-         mymax  <- max(forecasterrors)*3     
+         mysd   <- sd(forecasterrors)
+         mymin  <- min(forecasterrors) + mysd*5      
+         mymax  <- max(forecasterrors) + mysd*3     
          mybins <- seq(mymin, mymax, mybinsize)
          hist(forecasterrors, col="red", freq=FALSE, breaks=mybins) 
          # freq=FALSE ensures the area under the histogram = 1
-         mysd   <- sd(forecasterrors)
          # generate normally distributed data with mean 0 and standard deviation mysd
          mynorm <- rnorm(10000, mean=0, sd=mysd)
          myhist <- hist(mynorm, plot=FALSE, breaks=mybins) 
