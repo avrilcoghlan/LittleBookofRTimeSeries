@@ -668,7 +668,7 @@ the distribution of forecast errors. To do this, we can define an R function "pl
          # make a histogram of the forecast errors: 
          mybinsize <- IQR(forecasterrors)/4
          mysd   <- sd(forecasterrors)
-         mymin  <- min(forecasterrors) + mysd*5      
+         mymin  <- min(forecasterrors) - mysd*5      
          mymax  <- max(forecasterrors) + mysd*3     
          # generate normally distributed data with mean 0 and standard deviation mysd
          mynorm <- rnorm(10000, mean=0, sd=mysd)
@@ -1595,7 +1595,7 @@ Many of the examples in this booklet are inspired by examples in the excellent O
 "Time series" (product code M249/02), available from `the Open University Shop <http://www.ouw.co.uk/store/>`_.
 
 Thank you to Ravi Aranke for bringing auto.arima() to my attention, and Maurice Omane-Adjepong for bringing
-unit root tests to my attention. Thank you for other comments to Antoine Binard and Bill Johnston.
+unit root tests to my attention, and Christian Seubert for noticing a small bug in plotForecastErrors(). Thank you for other comments to Antoine Binard and Bill Johnston.
 
 Contact
 -------
