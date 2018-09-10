@@ -25,7 +25,7 @@ These instructions will focus on installing R on a Windows PC. However, I will a
 briefly mention how to install R on a Macintosh or Linux computer (see below).
 
 If you are using a Windows PC, there are two ways you can check whether R is
-already isntalled on your computer:
+already installed on your computer:
 
 1. Check if there is an "R" icon on the desktop of the computer that you are using.
    If so, double-click on the "R" icon to start R. If you cannot find an "R" icon, try step 2 instead.
