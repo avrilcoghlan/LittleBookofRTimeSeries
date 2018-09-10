@@ -203,8 +203,10 @@ To use R, you first need to start the R program on your computer.
 You should have already installed R on your computer (see above). 
 
 To start R, you can either follow step 1 or 2:
+
 1. Check if there is an "R" icon on the desktop of the computer that you are using.
    If so, double-click on the "R" icon to start R. If you cannot find an "R" icon, try step 2 instead.
+
 2. Click on the "Start" button at the bottom left of your computer screen, and then choose "All programs", and start R by selecting "R"  (or R X.X.X, where X.X.X gives the version of R, eg. R 2.10.0) from the menu of programs.
 
 This should bring up a new window, which is the *R console*.
